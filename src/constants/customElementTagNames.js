@@ -1,4 +1,4 @@
-export default [
+const customElementTagNames = [
     "custom-description-list",
     "custom-description-list-data",
     "custom-divider",
@@ -73,3 +73,5 @@ export default [
     "custom-gjennomfoeringsplan",
     "custom-gjenpart-nabovarsel"
 ];
+
+export { customElementTagNames };
