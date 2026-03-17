@@ -17,9 +17,21 @@
         "build": "tsup",
         "test": "jest"
     },
-    "packageManager": "yarn@4.5.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Arkitektum/altinn-studio-custom-components-utils.git"
+    },
+    "author": "",
+    "bugs": {
+        "url": "https://github.com/Arkitektum/altinn-studio-custom-components-utils/issues"
+    },
+    "homepage": "https://github.com/Arkitektum/altinn-studio-custom-components-utils#readme",
     "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.0.3",
+        "globals": "^17.4.0",
         "tsup": "^8.5.1",
         "typescript": "^5.9.3"
-    }
+    },
+    "packageManager": "yarn@4.5.0"
 }
