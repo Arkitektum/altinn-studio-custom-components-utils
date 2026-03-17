@@ -2,6 +2,7 @@
 import { hasValue } from "./dataHelpers";
 
 // Constants
+import { customElementTagNames } from "../constants/customElementTagNames";
 import { validSizeValues } from "../constants/validSizeValues";
 
 /**
@@ -12,4 +13,15 @@ import { validSizeValues } from "../constants/validSizeValues";
  */
 export function isValidHeaderSize(size) {
     return hasValue(size) && validSizeValues.includes(size.toLowerCase());
+}
+
+/**
+ * Checks if the provided tag name is valid.
+ *
+ * @param {string} tagName - The tag name to validate.
+ * @returns {boolean} True if the tag name is valid, false otherwise.
+ */
+export function isValidTagName(tagName) {
+    const validTagNames = customElementTagNames;
+    return validTagNames.includes(tagName);
 }
