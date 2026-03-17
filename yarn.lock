@@ -5,6 +5,22 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@arkitektum/altinn-studio-custom-components-utils@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@arkitektum/altinn-studio-custom-components-utils@workspace:."
+  dependencies:
+    "@babel/core": "npm:^7.29.0"
+    "@babel/preset-env": "npm:^7.29.2"
+    "@eslint/js": "npm:^10.0.1"
+    eslint: "npm:^10.0.3"
+    globals: "npm:^17.4.0"
+    jest: "npm:^30.3.0"
+    jest-environment-jsdom: "npm:^30.3.0"
+    tsup: "npm:^8.5.1"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@asamuzakjp/css-color@npm:^3.2.0":
   version: 3.2.0
   resolution: "@asamuzakjp/css-color@npm:3.2.0"
@@ -2628,22 +2644,6 @@ __metadata:
   checksum: 10c0/a2bc39b0555dc9802c899f86990eb8eed6e366cddbf65be43d5aa7e4f3c4e1a199d5460fd7ca4fb3d864000dbbc049253b72faa83b3b30e641ca52cb29a68c22
   languageName: node
   linkType: hard
-
-"altinn-studio-custom-components-utils@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "altinn-studio-custom-components-utils@workspace:."
-  dependencies:
-    "@babel/core": "npm:^7.29.0"
-    "@babel/preset-env": "npm:^7.29.2"
-    "@eslint/js": "npm:^10.0.1"
-    eslint: "npm:^10.0.3"
-    globals: "npm:^17.4.0"
-    jest: "npm:^30.3.0"
-    jest-environment-jsdom: "npm:^30.3.0"
-    tsup: "npm:^8.5.1"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
 
 "ansi-escapes@npm:^4.3.2":
   version: 4.3.2
