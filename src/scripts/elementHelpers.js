@@ -30,7 +30,7 @@ export function appendChildren(parent, children) {
  * @param {HTMLElement} element - The element on which to set the attributes.
  * @param {Object} attributes - An object containing key-value pairs of attributes to set.
  */
-function setAttributes(element, attributes) {
+export function setAttributes(element, attributes) {
     for (const key in attributes) {
         element.setAttribute(key, attributes[key]);
     }
