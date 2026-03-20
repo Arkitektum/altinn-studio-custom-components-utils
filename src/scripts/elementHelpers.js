@@ -31,7 +31,7 @@ export function appendChildren(parent, children) {
  * @param {Object} attributes - An object containing key-value pairs of attributes to set.
  */
 export function setAttributes(element, attributes) {
-    for (const key in attributes) {
+    for (const key of Object.keys(attributes)) {
         element.setAttribute(key, attributes[key]);
     }
 }
@@ -43,7 +43,7 @@ export function setAttributes(element, attributes) {
  * @param {Object} style - An object containing CSS property-value pairs.
  */
 export function addStyle(element, style) {
-    for (let key in style) {
+    for (const key of Object.keys(style)) {
         element.style[key] = style[key];
     }
 }
