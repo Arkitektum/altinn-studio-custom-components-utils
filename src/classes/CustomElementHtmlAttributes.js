@@ -280,13 +280,13 @@ export default class CustomElementHtmlAttributes {
      * Retrieves the `tableColumns` attribute from the provided props object.
      * If the `tableColumns` property exists and has a value, it returns the
      * JSON stringified version of the `tableColumns` property. Otherwise, it
-     * returns `false`.
+     * returns `null`.
      *
      * @param {Object} props - The props object containing the `tableColumns` property.
-     * @returns {string|false} The JSON stringified `tableColumns` if it exists and has a value, otherwise `false`.
+     * @returns {string|null} The JSON stringified `tableColumns` if it exists and has a value, otherwise `null`.
      */
     getTableColumnsAttributeFromProps(props) {
-        return hasValue(props?.tableColumns) && JSON.stringify(props?.tableColumns);
+        return hasValue(props?.tableColumns) ? JSON.stringify(props?.tableColumns) : null;
     }
 
     /**
@@ -294,10 +294,10 @@ export default class CustomElementHtmlAttributes {
      *
      * @param {Object} props - The properties object to extract the `itemKey` from.
      * @param {*} props.itemKey - The key to be checked and returned if valid.
-     * @returns {*} The value of `itemKey` if it exists and is valid; otherwise, returns `undefined`.
+     * @returns {*} The value of `itemKey` if it exists and is valid; otherwise, returns `null`.
      */
     getItemKeyAttributeFromProps(props) {
-        return hasValue(props?.itemKey) && props?.itemKey;
+        return hasValue(props?.itemKey) ? props?.itemKey : null;
     }
 
     /**
@@ -329,7 +329,7 @@ export default class CustomElementHtmlAttributes {
      * @returns {*} The value of `dataItemKey` if it exists and is valid; otherwise, returns undefined or false.
      */
     getDataItemKeyAttributeFromProps(props) {
-        return hasValue(props?.dataItemKey) && props?.dataItemKey;
+        return hasValue(props?.dataItemKey) ? props?.dataItemKey : null;
     }
 
     /**
@@ -347,10 +347,10 @@ export default class CustomElementHtmlAttributes {
      *
      * @param {Object} props - The props object containing potential attributes.
      * @param {string} [props.id] - The `id` attribute to be retrieved.
-     * @returns {string|undefined} The `id` attribute if it has a valid value, otherwise `undefined`.
+     * @returns {string|null} The `id` attribute if it has a valid value, otherwise `null`.
      */
     getIdAttributeFromProps(props) {
-        return hasValue(props?.id) && props?.id;
+        return hasValue(props?.id) ? props?.id : null;
     }
 
     /**

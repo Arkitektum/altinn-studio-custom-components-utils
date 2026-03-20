@@ -193,9 +193,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return JSON string if tableColumns has value", () => {
             expect(new CustomElementHtmlAttributes({}).getTableColumnsAttributeFromProps({ tableColumns: [1, 2] })).toBe("[1,2]");
         });
-        it("should return false if tableColumns is missing", () => {
+        it("should return null if tableColumns is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getTableColumnsAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getTableColumnsAttributeFromProps({})).toBe(null);
         });
     });
 
@@ -203,9 +203,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return itemKey if has value", () => {
             expect(new CustomElementHtmlAttributes({}).getItemKeyAttributeFromProps({ itemKey: "foo" })).toBe("foo");
         });
-        it("should return false if itemKey is missing", () => {
+        it("should return null if itemKey is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getItemKeyAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getItemKeyAttributeFromProps({})).toBe(null);
         });
     });
 
@@ -213,9 +213,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return dataItemKey if has value", () => {
             expect(new CustomElementHtmlAttributes({}).getDataItemKeyAttributeFromProps({ dataItemKey: "foo" })).toBe("foo");
         });
-        it("should return false if dataItemKey is missing", () => {
+        it("should return null if dataItemKey is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getDataItemKeyAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getDataItemKeyAttributeFromProps({})).toBe(null);
         });
     });
 
@@ -233,9 +233,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return id if has value", () => {
             expect(new CustomElementHtmlAttributes({}).getIdAttributeFromProps({ id: "foo" })).toBe("foo");
         });
-        it("should return false if id is missing", () => {
+        it("should return null if id is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getIdAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getIdAttributeFromProps({})).toBe(null);
         });
     });
 
