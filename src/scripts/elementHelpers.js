@@ -18,7 +18,7 @@ export function appendChildren(parent, children) {
         if (child instanceof HTMLElement) {
             parent.appendChild(child);
         } else {
-            parent.innerHTML += child;
+            parent.appendChild(document.createTextNode(String(child)));
         }
     }
     return parent;
