@@ -45,7 +45,7 @@ export function getTextResourceFromResourceBinding(resourceBinding) {
  */
 export function getTextResourcesFromResourceBindings(resourceBindings) {
     const texts = {};
-    for (const key in resourceBindings) {
+    for (const key of Object.keys(resourceBindings)) {
         texts[key] =
             typeof resourceBindings[key] === "object"
                 ? getTextResourcesFromResourceBindings(resourceBindings[key])
