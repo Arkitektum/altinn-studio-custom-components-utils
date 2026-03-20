@@ -118,7 +118,7 @@ export function addContainerElement(component, grid) {
  */
 export function createCustomElement(tagName, htmlAttributes) {
     if (!isValidTagName(tagName)) {
-        throw new Error(`Invalid tag name ${tagName}}`);
+        throw new Error(`Invalid tag name ${tagName}`);
     }
     const customFieldElement = document.createElement(tagName);
     setAttributes(customFieldElement, { ...htmlAttributes, tagName });
