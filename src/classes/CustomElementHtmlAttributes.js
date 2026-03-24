@@ -266,14 +266,14 @@ export default class CustomElementHtmlAttributes {
     /**
      * Retrieves the grid attribute from the provided props object.
      * If the `grid` property exists and has a value, it returns the JSON stringified version of it.
-     * Otherwise, it returns `undefined`.
+     * Otherwise, it returns `false`.
      *
      * @param {Object} props - The props object containing the grid attribute.
      * @param {Object} [props.grid] - The grid attribute to be processed.
-     * @returns {string|undefined} The JSON stringified grid attribute if it exists, otherwise `undefined`.
+     * @returns {string|false} The JSON stringified grid attribute if it exists, otherwise `false`.
      */
     getGridAttributeFromProps(props) {
-        return hasValue(props?.grid) && JSON.stringify(props?.grid);
+        return hasValue(props?.grid) ? JSON.stringify(props?.grid) : false;
     }
 
     /**
