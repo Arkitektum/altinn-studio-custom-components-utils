@@ -308,7 +308,7 @@ export default class CustomElementHtmlAttributes {
      * @returns {*} The value of `itemTermKey` if it exists and has a value; otherwise, returns a falsy value.
      */
     getItemTermKeyAttributeFromProps(props) {
-        return hasValue(props?.itemTermKey) && props?.itemTermKey;
+        return hasValue(props?.itemTermKey) ? props?.itemTermKey : null;
     }
 
     /**
