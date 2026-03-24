@@ -47,7 +47,7 @@ export function getTextResourcesFromResourceBindings(resourceBindings) {
     const texts = {};
     for (const key of Object.keys(resourceBindings)) {
         texts[key] =
-            typeof resourceBindings[key] === "object"
+            typeof resourceBindings[key] === "object" && resourceBindings[key] !== null && !Array.isArray(resourceBindings[key])
                 ? getTextResourcesFromResourceBindings(resourceBindings[key])
                 : getTextResourceFromResourceBinding(resourceBindings[key]);
     }
