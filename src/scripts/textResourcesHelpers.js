@@ -27,11 +27,11 @@ export function getDefaultTextResources() {
 export function getTextResourceFromResourceBinding(resourceBinding) {
     const textResources = getTextResources();
     let textResource = textResources?.resources?.find((resource) => resource.id === resourceBinding)?.value;
-    if (textResource === undefined || textResource === null) {
+    if (textResource == null) {
         const defaultTextResources = getDefaultTextResources();
         textResource = defaultTextResources?.resources?.find((resource) => resource.id === resourceBinding)?.value;
     }
-    return textResource || resourceBinding;
+    return textResource ?? resourceBinding;
 }
 
 /**
@@ -47,7 +47,7 @@ export function getTextResourcesFromResourceBindings(resourceBindings) {
     const texts = {};
     for (const key of Object.keys(resourceBindings)) {
         texts[key] =
-            typeof resourceBindings[key] === "object"
+            typeof resourceBindings[key] === "object" && resourceBindings[key] !== null && !Array.isArray(resourceBindings[key])
                 ? getTextResourcesFromResourceBindings(resourceBindings[key])
                 : getTextResourceFromResourceBinding(resourceBindings[key]);
     }
