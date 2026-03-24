@@ -388,7 +388,7 @@ export default class CustomElementHtmlAttributes {
      * @returns {string|undefined} - The string representation of the 'format' attribute if it exists and has a value; otherwise, undefined.
      */
     getFormatAttributeFromProps(props) {
-        return hasValue(props?.format) && props?.format?.toString();
+        return hasValue(props?.format) ? props?.format?.toString() : undefined;
     }
 
     /**
