@@ -133,6 +133,6 @@ export function createCustomElement(tagName, htmlAttributes) {
         throw new Error(`Invalid tag name ${tagName}`);
     }
     const customFieldElement = document.createElement(tagName);
-    setAttributes(customFieldElement, { ...htmlAttributes, tagName });
+    setAttributes(customFieldElement, htmlAttributes);
     return customFieldElement;
 }
