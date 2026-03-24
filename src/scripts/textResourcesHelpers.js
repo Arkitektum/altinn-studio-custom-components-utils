@@ -27,11 +27,11 @@ export function getDefaultTextResources() {
 export function getTextResourceFromResourceBinding(resourceBinding) {
     const textResources = getTextResources();
     let textResource = textResources?.resources?.find((resource) => resource.id === resourceBinding)?.value;
-    if (textResource === undefined || textResource === null) {
+    if (textResource == null) {
         const defaultTextResources = getDefaultTextResources();
         textResource = defaultTextResources?.resources?.find((resource) => resource.id === resourceBinding)?.value;
     }
-    return textResource || resourceBinding;
+    return textResource ?? resourceBinding;
 }
 
 /**
