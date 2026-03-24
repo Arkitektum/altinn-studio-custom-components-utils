@@ -336,10 +336,10 @@ export default class CustomElementHtmlAttributes {
      * Retrieves the 'dataTitleItemKey' attribute from the given props if it has a value.
      *
      * @param {Object} props - The properties object to extract the attribute from.
-     * @returns {*} The value of 'dataTitleItemKey' if it exists and is valid; otherwise, returns undefined or a falsy value.
+     * @returns {*} The value of 'dataTitleItemKey' if it exists and is valid; otherwise, returns null.
      */
     getDataTitleItemKeyAttributeFromProps(props) {
-        return hasValue(props?.dataTitleItemKey) && props?.dataTitleItemKey;
+        return hasValue(props?.dataTitleItemKey) ? props?.dataTitleItemKey : null;
     }
 
     /**
