@@ -315,10 +315,10 @@ export default class CustomElementHtmlAttributes {
      * Retrieves the 'itemDescriptionKey' attribute from the provided props object if it has a valid value.
      *
      * @param {Object} props - The properties object that may contain the 'itemDescriptionKey' attribute.
-     * @returns {*} The value of 'itemDescriptionKey' if it exists and is valid; otherwise, returns a falsy value.
+     * @returns {*} The value of 'itemDescriptionKey' if it exists and is valid; otherwise, returns null.
      */
     getItemDescriptionKeyAttributeFromProps(props) {
-        return hasValue(props?.itemDescriptionKey) && props?.itemDescriptionKey;
+        return hasValue(props?.itemDescriptionKey) ? props?.itemDescriptionKey : null;
     }
 
     /**
