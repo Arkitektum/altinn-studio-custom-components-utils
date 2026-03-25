@@ -84,7 +84,9 @@ export function calculateFlexWidth(grid) {
         const md = grid.md || sm;
         const lg = grid.lg || md;
         const xl = grid.xl || lg;
-        return Math.min((xs / 12) * 100, (sm / 12) * 100, (md / 12) * 100, (lg / 12) * 100, (xl / 12) * 100);
+        const widths = [xs, sm, md, lg, xl].map((value) => (value / 12) * 100);
+
+        return Math.min(...widths);
     } else {
         return 100;
     }
