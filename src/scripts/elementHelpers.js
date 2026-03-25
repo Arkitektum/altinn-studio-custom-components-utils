@@ -64,25 +64,26 @@ export function addStyle(element, style) {
 }
 
 /**
- * Calculates the flex width percentage based on a grid configuration.
- * The function considers the grid breakpoints (xs, sm, md, lg, xl) and returns
- * the smallest width percentage among them, defaulting to 100% if no grid is provided.
+ * Calculates the flex width percentage based on the provided grid configuration. The function normalizes the grid values for different breakpoints (xs, sm, md, lg, xl) and returns the minimum width percentage to ensure proper responsiveness.
  *
- * @param {Object} [grid] - The grid configuration object.
- * @param {number} [grid.xs=12] - Number of columns for extra small screens.
- * @param {number} [grid.sm=grid.xs] - Number of columns for small screens.
- * @param {number} [grid.md=grid.sm] - Number of columns for medium screens.
- * @param {number} [grid.lg=grid.md] - Number of columns for large screens.
- * @param {number} [grid.xl=grid.lg] - Number of columns for extra large screens.
- * @returns {number} The minimum flex width percentage for the given grid configuration.
+ * @param {Object} grid - The grid configuration object containing breakpoint values (xs, sm, md, lg, xl).
+ * @returns {number} The calculated flex width percentage based on the grid configuration. If no grid is provided, it returns 100.
  */
 export function calculateFlexWidth(grid) {
     if (grid) {
-        const xs = grid.xs || 12;
-        const sm = grid.sm || xs;
-        const md = grid.md || sm;
-        const lg = grid.lg || md;
-        const xl = grid.xl || lg;
+        const normalizeGridValue = (value, fallback) => {
+            if (value === null || value === undefined) {
+                return fallback;
+            }
+            const numeric = Number(value);
+            return Number.isNaN(numeric) ? fallback : numeric;
+        };
+
+        const xs = normalizeGridValue(grid.xs, 12);
+        const sm = normalizeGridValue(grid.sm, xs);
+        const md = normalizeGridValue(grid.md, sm);
+        const lg = normalizeGridValue(grid.lg, md);
+        const xl = normalizeGridValue(grid.xl, lg);
         const widths = [xs, sm, md, lg, xl].map((value) => (value / 12) * 100);
 
         return Math.min(...widths);
