@@ -38,7 +38,6 @@ export function setAttributes(element, attributes) {
         return;
     }
     for (const [key, value] of Object.entries(attributes)) {
-        element.setAttribute(key, attributes[key]);
         if (value === null || value === undefined) {
             continue;
         }
