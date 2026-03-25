@@ -30,12 +30,12 @@
         "@babel/core": "^7.29.0",
         "@babel/preset-env": "^7.29.2",
         "@eslint/js": "^10.0.1",
-        "eslint": "^10.0.3",
+        "eslint": "^10.1.0",
         "globals": "^17.4.0",
         "jest": "^30.3.0",
         "jest-environment-jsdom": "^30.3.0",
         "tsup": "^8.5.1",
-        "typescript": "^5.9.3"
+        "typescript": "^6.0.2"
     },
     "packageManager": "yarn@4.5.0"
 }
