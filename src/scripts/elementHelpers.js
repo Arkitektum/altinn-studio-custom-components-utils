@@ -37,8 +37,12 @@ export function setAttributes(element, attributes) {
     if (!attributes || typeof attributes !== "object") {
         return;
     }
-    for (const key of Object.keys(attributes)) {
+    for (const [key, value] of Object.entries(attributes)) {
         element.setAttribute(key, attributes[key]);
+        if (value === null || value === undefined) {
+            continue;
+        }
+        element.setAttribute(key, String(value));
     }
 }
 
