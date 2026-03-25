@@ -102,8 +102,8 @@ describe("CustomElementHtmlAttributes", () => {
         it('should return "true" if isChildComponent is truthy', () => {
             expect(new CustomElementHtmlAttributes({}).getIsChildComponentAttributeFromProps({ isChildComponent: true })).toBe("true");
         });
-        it("should return undefined if isChildComponent is falsy", () => {
-            expect(new CustomElementHtmlAttributes({}).getIsChildComponentAttributeFromProps({ isChildComponent: false })).toBeUndefined();
+        it("should return null if isChildComponent is falsy", () => {
+            expect(new CustomElementHtmlAttributes({}).getIsChildComponentAttributeFromProps({ isChildComponent: false })).toBeNull();
         });
     });
 
@@ -111,8 +111,8 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return tagName as string if present", () => {
             expect(new CustomElementHtmlAttributes({}).getTagNameAttributeFromProps({ tagName: "foo" })).toBe("foo");
         });
-        it("should return undefined if tagName is missing", () => {
-            expect(new CustomElementHtmlAttributes({}).getTagNameAttributeFromProps({})).toBeUndefined();
+        it("should return null if tagName is missing", () => {
+            expect(new CustomElementHtmlAttributes({}).getTagNameAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -121,9 +121,9 @@ describe("CustomElementHtmlAttributes", () => {
             isValidHeaderSize.mockReturnValue(true);
             expect(new CustomElementHtmlAttributes({}).getSizeAttributeFromProps({ size: "H3" })).toBe("h3");
         });
-        it("should return undefined if size is invalid", () => {
+        it("should return null if size is invalid", () => {
             isValidHeaderSize.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getSizeAttributeFromProps({ size: "foo" })).toBeUndefined();
+            expect(new CustomElementHtmlAttributes({}).getSizeAttributeFromProps({ size: "foo" })).toBeNull();
         });
     });
 
@@ -132,8 +132,8 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getHideTitleAttributeFromProps({ hideTitle: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getHideTitleAttributeFromProps({ hideTitle: "true" })).toBe("true");
         });
-        it("should return undefined if hideTitle is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getHideTitleAttributeFromProps({ hideTitle: false })).toBeUndefined();
+        it("should return null if hideTitle is false", () => {
+            expect(new CustomElementHtmlAttributes({}).getHideTitleAttributeFromProps({ hideTitle: false })).toBeNull();
         });
     });
 
@@ -142,8 +142,8 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getHideIfEmptyAttributeFromProps({ hideIfEmpty: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getHideIfEmptyAttributeFromProps({ hideIfEmpty: "true" })).toBe("true");
         });
-        it("should return undefined if hideIfEmpty is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getHideIfEmptyAttributeFromProps({ hideIfEmpty: false })).toBeUndefined();
+        it("should return null if hideIfEmpty is false", () => {
+            expect(new CustomElementHtmlAttributes({}).getHideIfEmptyAttributeFromProps({ hideIfEmpty: false })).toBeNull();
         });
     });
 
@@ -152,8 +152,8 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getIsEmptyAttributeFromProps({ isEmpty: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getIsEmptyAttributeFromProps({ isEmpty: "true" })).toBe("true");
         });
-        it("should return undefined if isEmpty is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getIsEmptyAttributeFromProps({ isEmpty: false })).toBeUndefined();
+        it("should return null if isEmpty is false", () => {
+            expect(new CustomElementHtmlAttributes({}).getIsEmptyAttributeFromProps({ isEmpty: false })).toBeNull();
         });
     });
 
@@ -162,8 +162,8 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getInlineAttributeFromProps({ inline: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getInlineAttributeFromProps({ inline: "true" })).toBe("true");
         });
-        it("should return undefined if inline is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getInlineAttributeFromProps({ inline: false })).toBeUndefined();
+        it("should return null if inline is false", () => {
+            expect(new CustomElementHtmlAttributes({}).getInlineAttributeFromProps({ inline: false })).toBeNull();
         });
     });
 
@@ -173,9 +173,9 @@ describe("CustomElementHtmlAttributes", () => {
                 '{"color":"red"}'
             );
         });
-        it("should return undefined if styleOverride is missing", () => {
+        it("should return null if styleOverride is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getStyleOverrideAttributeFromProps({})).toBeUndefined();
+            expect(new CustomElementHtmlAttributes({}).getStyleOverrideAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -183,9 +183,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return JSON string if grid has value", () => {
             expect(new CustomElementHtmlAttributes({}).getGridAttributeFromProps({ grid: { xs: 12 } })).toBe('{"xs":12}');
         });
-        it("should return false if grid is missing", () => {
+        it("should return null if grid is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getGridAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getGridAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -195,7 +195,7 @@ describe("CustomElementHtmlAttributes", () => {
         });
         it("should return null if tableColumns is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getTableColumnsAttributeFromProps({})).toBe(null);
+            expect(new CustomElementHtmlAttributes({}).getTableColumnsAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -205,7 +205,7 @@ describe("CustomElementHtmlAttributes", () => {
         });
         it("should return null if itemKey is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getItemKeyAttributeFromProps({})).toBe(null);
+            expect(new CustomElementHtmlAttributes({}).getItemKeyAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -215,7 +215,7 @@ describe("CustomElementHtmlAttributes", () => {
         });
         it("should return null if dataItemKey is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getDataItemKeyAttributeFromProps({})).toBe(null);
+            expect(new CustomElementHtmlAttributes({}).getDataItemKeyAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -223,9 +223,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return dataTitleItemKey if has value", () => {
             expect(new CustomElementHtmlAttributes({}).getDataTitleItemKeyAttributeFromProps({ dataTitleItemKey: "foo" })).toBe("foo");
         });
-        it("should return false if dataTitleItemKey is missing", () => {
+        it("should return null if dataTitleItemKey is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getDataTitleItemKeyAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getDataTitleItemKeyAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -235,7 +235,7 @@ describe("CustomElementHtmlAttributes", () => {
         });
         it("should return null if id is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getIdAttributeFromProps({})).toBe(null);
+            expect(new CustomElementHtmlAttributes({}).getIdAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -257,8 +257,8 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: "true" })).toBe("true");
         });
-        it("should return undefined if hideOrgNr is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: false })).toBeUndefined();
+        it("should return null if hideOrgNr is false", () => {
+            expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: false })).toBeNull();
         });
     });
 
@@ -267,9 +267,9 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getFormatAttributeFromProps({ format: 123 })).toBe("123");
             expect(new CustomElementHtmlAttributes({}).getFormatAttributeFromProps({ format: "abc" })).toBe("abc");
         });
-        it("should return false if format is missing", () => {
+        it("should return null if format is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getFormatAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getFormatAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -278,8 +278,8 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getShowRowNumbersAttributeFromProps({ showRowNumbers: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getShowRowNumbersAttributeFromProps({ showRowNumbers: "true" })).toBe("true");
         });
-        it("should return undefined if showRowNumbers is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getShowRowNumbersAttributeFromProps({ showRowNumbers: false })).toBeUndefined();
+        it("should return null if showRowNumbers is false", () => {
+            expect(new CustomElementHtmlAttributes({}).getShowRowNumbersAttributeFromProps({ showRowNumbers: false })).toBeNull();
         });
     });
 
@@ -287,9 +287,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return partType if has value", () => {
             expect(new CustomElementHtmlAttributes({}).getPartTypeAttributeFromProps({ partType: "foo" })).toBe("foo");
         });
-        it("should return false if partType is missing", () => {
+        it("should return null if partType is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getPartTypeAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getPartTypeAttributeFromProps({})).toBeNull();
         });
     });
 
@@ -297,9 +297,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return JSON string if resourceBindings has value", () => {
             expect(new CustomElementHtmlAttributes({}).getResourceBindingsFromProps({ resourceBindings: { a: 1 } })).toBe('{"a":1}');
         });
-        it("should return false if resourceBindings is missing", () => {
+        it("should return null if resourceBindings is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getResourceBindingsFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getResourceBindingsFromProps({})).toBeNull();
         });
     });
 
@@ -318,8 +318,8 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getEnableLinksFromProps({ enableLinks: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getEnableLinksFromProps({ enableLinks: "true" })).toBe("true");
         });
-        it("should return undefined if enableLinks is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getEnableLinksFromProps({ enableLinks: false })).toBeUndefined();
+        it("should return null if enableLinks is false", () => {
+            expect(new CustomElementHtmlAttributes({}).getEnableLinksFromProps({ enableLinks: false })).toBeNull();
         });
     });
 
@@ -327,9 +327,9 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return text if has value", () => {
             expect(new CustomElementHtmlAttributes({}).getTextAttributeFromProps({ text: "foo" })).toBe("foo");
         });
-        it("should return false if text is missing", () => {
+        it("should return null if text is missing", () => {
             hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getTextAttributeFromProps({})).toBe(false);
+            expect(new CustomElementHtmlAttributes({}).getTextAttributeFromProps({})).toBeNull();
         });
     });
 });
