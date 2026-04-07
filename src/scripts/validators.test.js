@@ -24,6 +24,10 @@ describe("validators", () => {
             expect(isValidTagName("custom-header")).toBe(true);
             expect(isValidTagName("custom-footer")).toBe(true);
         });
+        it("treats different casing as invalid (case-sensitive)", () => {
+            expect(isValidTagName("CUSTOM-HEADER")).toBe(false);
+            expect(isValidTagName("Custom-Header")).toBe(false);
+        });
         it("returns false for invalid tag name", () => {
             expect(isValidTagName("div")).toBe(false);
             expect(isValidTagName("")).toBe(false);
