@@ -1,10 +1,10 @@
 import { isValidHeaderSize, isValidTagName } from "./validators";
 
+jest.mock("../constants/validSizeValues", () => ({ validSizeValues: ["h1", "h2", "h3"] }));
+jest.mock("../constants/customElementTagNames", () => ({ customElementTagNames: ["custom-header", "custom-footer"] }));
+
 describe("validators", () => {
     describe("isValidHeaderSize", () => {
-        beforeAll(() => {
-            jest.mock("../constants/validSizeValues", () => ({ validSizeValues: ["h1", "h2", "h3"] }));
-        });
         it("returns true for valid header size (case-insensitive)", () => {
             expect(isValidHeaderSize("h1")).toBe(true);
             expect(isValidHeaderSize("H2")).toBe(true);
@@ -17,9 +17,6 @@ describe("validators", () => {
     });
 
     describe("isValidTagName", () => {
-        beforeAll(() => {
-            jest.mock("../constants/customElementTagNames", () => ({ customElementTagNames: ["custom-header", "custom-footer"] }));
-        });
         it("returns true for valid tag name", () => {
             expect(isValidTagName("custom-header")).toBe(true);
         });
