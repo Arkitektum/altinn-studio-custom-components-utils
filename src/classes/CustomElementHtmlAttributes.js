@@ -56,7 +56,7 @@ export default class CustomElementHtmlAttributes {
         const dataTitleItemKey = this.getDataTitleItemKeyAttributeFromProps(props);
         const id = this.getIdAttributeFromProps(props);
         const feedbackType = this.getFeedbackTypeAttributeFromProps(props);
-        const hideOrgNr = this.getHideOrgNr(props);
+        const hideOrgNr = this.getHideOrgNrAttributeFromProps(props);
         const format = this.getFormatAttributeFromProps(props);
         const showRowNumbers = this.getShowRowNumbersAttributeFromProps(props);
         const partType = this.getPartTypeAttributeFromProps(props);
@@ -376,7 +376,7 @@ export default class CustomElementHtmlAttributes {
      * @param {boolean|string} [props.hideOrgNr] - The property indicating whether to hide the organization number.
      * @returns {string|null} Returns the string "true" if the "hideOrgNr" property is strictly equal to "true", otherwise null.
      */
-    getHideOrgNr(props) {
+    getHideOrgNrAttributeFromProps(props) {
         return props?.hideOrgNr?.toString() === "true" ? "true" : null;
     }
 
