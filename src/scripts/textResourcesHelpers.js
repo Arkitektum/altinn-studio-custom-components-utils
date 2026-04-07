@@ -35,6 +35,16 @@ export function getTextResourceFromResourceBinding(resourceBinding) {
 }
 
 /**
+ * Checks whether a value is a plain object (non-null object and not an array).
+ *
+ * @param {*} value - The value to check.
+ * @returns {boolean} True if the value is a plain object, false otherwise.
+ */
+export function isPlainObject(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+/**
  * Retrieves text resources from the given resource bindings object.
  *
  * Iterates over each key in the resourceBindings object and uses
@@ -46,10 +56,9 @@ export function getTextResourceFromResourceBinding(resourceBinding) {
 export function getTextResourcesFromResourceBindings(resourceBindings) {
     const texts = {};
     for (const key of Object.keys(resourceBindings)) {
-        texts[key] =
-            typeof resourceBindings[key] === "object" && resourceBindings[key] !== null && !Array.isArray(resourceBindings[key])
-                ? getTextResourcesFromResourceBindings(resourceBindings[key])
-                : getTextResourceFromResourceBinding(resourceBindings[key]);
+        texts[key] = isPlainObject(resourceBindings[key])
+            ? getTextResourcesFromResourceBindings(resourceBindings[key])
+            : getTextResourceFromResourceBinding(resourceBindings[key]);
     }
     return texts;
 }
