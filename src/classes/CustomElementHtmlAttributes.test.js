@@ -252,7 +252,7 @@ describe("CustomElementHtmlAttributes", () => {
         });
     });
 
-    describe("getHideOrgNr", () => {
+    describe("getHideOrgNrAttributeFromProps", () => {
         it('should return "true" if hideOrgNr is true', () => {
             expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: "true" })).toBe("true");
