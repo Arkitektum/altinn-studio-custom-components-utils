@@ -15,6 +15,7 @@ describe("validators", () => {
             expect(isValidHeaderSize("h7")).toBe(false);
             expect(isValidHeaderSize("")).toBe(false);
             expect(isValidHeaderSize(null)).toBe(false);
+            expect(isValidHeaderSize(undefined)).toBe(false);
         });
     });
 
@@ -27,6 +28,7 @@ describe("validators", () => {
             expect(isValidTagName("div")).toBe(false);
             expect(isValidTagName("")).toBe(false);
             expect(isValidTagName(null)).toBe(false);
+            expect(isValidTagName(undefined)).toBe(false);
         });
     });
 });
