@@ -258,11 +258,11 @@ describe("CustomElementHtmlAttributes", () => {
 
     describe("getHideOrgNrAttributeFromProps", () => {
         it('should return "true" if hideOrgNr is true', () => {
-            expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: true })).toBe("true");
-            expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: "true" })).toBe("true");
+            expect(new CustomElementHtmlAttributes({}).getHideOrgNrAttributeFromProps({ hideOrgNr: true })).toBe("true");
+            expect(new CustomElementHtmlAttributes({}).getHideOrgNrAttributeFromProps({ hideOrgNr: "true" })).toBe("true");
         });
         it("should return null if hideOrgNr is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: false })).toBeNull();
+            expect(new CustomElementHtmlAttributes({}).getHideOrgNrAttributeFromProps({ hideOrgNr: false })).toBeNull();
         });
     });
 
