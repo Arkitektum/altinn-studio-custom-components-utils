@@ -92,6 +92,10 @@ describe("CustomElementHtmlAttributes", () => {
         it("should stringify object formData", () => {
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: { a: 1 } })).toBe('{"a":1}');
         });
+        it("should use formData from argument when provided", () => {
+            const attrs = new CustomElementHtmlAttributes({});
+            expect(attrs.getFormDataAttributeFromProps({ formData: { a: 1 } })).toBe('{"a":1}');
+        });
         it("should return null if formData is not present", () => {
             hasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({})).toBeNull();
@@ -252,7 +256,7 @@ describe("CustomElementHtmlAttributes", () => {
         });
     });
 
-    describe("getHideOrgNr", () => {
+    describe("getHideOrgNrAttributeFromProps", () => {
         it('should return "true" if hideOrgNr is true', () => {
             expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: true })).toBe("true");
             expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: "true" })).toBe("true");
