@@ -92,6 +92,10 @@ describe("CustomElementHtmlAttributes", () => {
         it("should stringify object formData", () => {
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: { a: 1 } })).toBe('{"a":1}');
         });
+        it("should use formData from constructor props when provided", () => {
+            const attrs = new CustomElementHtmlAttributes({ formData: { a: 1 } });
+            expect(attrs.getFormDataAttributeFromProps({})).toBe('{"a":1}');
+        });
         it("should return null if formData is not present", () => {
             hasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({})).toBeNull();
