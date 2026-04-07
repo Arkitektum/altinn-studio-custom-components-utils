@@ -7,6 +7,8 @@ describe("validators", () => {
     describe("isValidHeaderSize", () => {
         it("returns true for valid header size (case-insensitive)", () => {
             expect(isValidHeaderSize("h1")).toBe(true);
+            expect(isValidHeaderSize("H1")).toBe(true);
+            expect(isValidHeaderSize("h2")).toBe(true);
             expect(isValidHeaderSize("H2")).toBe(true);
         });
         it("returns false for invalid header size", () => {
@@ -19,6 +21,7 @@ describe("validators", () => {
     describe("isValidTagName", () => {
         it("returns true for valid tag name", () => {
             expect(isValidTagName("custom-header")).toBe(true);
+            expect(isValidTagName("custom-footer")).toBe(true);
         });
         it("returns false for invalid tag name", () => {
             expect(isValidTagName("div")).toBe(false);
