@@ -86,15 +86,11 @@ describe("CustomElementHtmlAttributes", () => {
         it("should stringify string formData", () => {
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: "abc" })).toBe('"abc"');
         });
-        it("should stringify number formData", () => {
+        it("should make numbers to string and JSON stringify", () => {
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: 123 })).toBe('"123"');
         });
         it("should stringify object formData", () => {
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: { a: 1 } })).toBe('{"a":1}');
-        });
-        it("should use formData from argument when provided", () => {
-            const attrs = new CustomElementHtmlAttributes({});
-            expect(attrs.getFormDataAttributeFromProps({ formData: { a: 1 } })).toBe('{"a":1}');
         });
         it("should return null if formData is not present", () => {
             hasValue.mockReturnValue(false);
@@ -258,11 +254,11 @@ describe("CustomElementHtmlAttributes", () => {
 
     describe("getHideOrgNrAttributeFromProps", () => {
         it('should return "true" if hideOrgNr is true', () => {
-            expect(new CustomElementHtmlAttributes({}).getHideOrgNrAttributeFromProps({ hideOrgNr: true })).toBe("true");
-            expect(new CustomElementHtmlAttributes({}).getHideOrgNrAttributeFromProps({ hideOrgNr: "true" })).toBe("true");
+            expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: true })).toBe("true");
+            expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: "true" })).toBe("true");
         });
         it("should return null if hideOrgNr is false", () => {
-            expect(new CustomElementHtmlAttributes({}).getHideOrgNrAttributeFromProps({ hideOrgNr: false })).toBeNull();
+            expect(new CustomElementHtmlAttributes({}).getHideOrgNr({ hideOrgNr: false })).toBeNull();
         });
     });
 
