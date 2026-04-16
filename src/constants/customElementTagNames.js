@@ -40,6 +40,7 @@ const customElementTagNames = [
     "custom-group-loefteinnretninger",
     "custom-group-nabo-gjenboer-eiendom",
     "custom-group-overvann",
+    "custom-group-rammebetingelser-krav-til-byggegrunn",
     "custom-group-rammebetingelser-tilknytninger",
     "custom-group-samsvar-ansvarsomraade",
     "custom-group-samsvar-erklaeringer",
