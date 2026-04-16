@@ -31,6 +31,10 @@ describe("dataHelpers", () => {
             expect(hasValue({ altinnRowId: "123" })).toBe(false);
             expect(hasValue({ a: "", b: 0 })).toBe(true);
         });
+        it("returns false for empty objects and objects with only empty string values", () => {
+            expect(hasValue({})).toBe(false);
+            expect(hasValue({ a: "" })).toBe(false);
+        });
     });
 
     describe("getValueFromDataKey", () => {
@@ -54,6 +58,15 @@ describe("dataHelpers", () => {
             expect(getValueFromDataKey(data, "b.c")).toBe(2);
             expect(getValueFromDataKey(data, "b.d[1].e")).toBe(4);
             expect(getValueFromDataKey(data, "arr[2]")).toBe(30);
+        });
+        it("returns data for empty string dataKey", () => {
+            expect(getValueFromDataKey(data, "")).toBe(data);
+        });
+        it("returns undefined for undefined data with a key", () => {
+            expect(getValueFromDataKey(undefined, "a")).toBeUndefined();
+        });
+        it("returns undefined for non-existent key", () => {
+            expect(getValueFromDataKey(data, "nonExistent")).toBeUndefined();
         });
     });
 
@@ -82,6 +95,14 @@ describe("dataHelpers", () => {
         });
         it("returns empty object if no dataModelBindings", () => {
             expect(getDataForComponent({}, dataModels)).toEqual({});
+        });
+        it("returns empty object for null or undefined component", () => {
+            expect(getDataForComponent(null, dataModels)).toEqual({});
+            expect(getDataForComponent(undefined, dataModels)).toEqual({});
+        });
+        it("falls back to binding data if dataType not found in models (object binding)", () => {
+            const component = { dataModelBindings: { a: { dataType: "notFound", field: "foo", data: 99 } } };
+            expect(getDataForComponent(component, dataModels)).toEqual({ a: 99 });
         });
     });
 });

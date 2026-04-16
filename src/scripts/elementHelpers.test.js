@@ -25,6 +25,13 @@ describe("elementHelpers", () => {
             expect(parent.childNodes.length).toBe(1);
             expect(parent.childNodes[0].textContent).toBe("ok");
         });
+        it("converts number children to text nodes", () => {
+            const parent = document.createElement("div");
+            appendChildren(parent, [42]);
+            expect(parent.childNodes.length).toBe(1);
+            expect(parent.childNodes[0].nodeType).toBe(Node.TEXT_NODE);
+            expect(parent.childNodes[0].textContent).toBe("42");
+        });
     });
 
     describe("setAttributes", () => {
@@ -86,6 +93,10 @@ describe("elementHelpers", () => {
             expect(calculateFlexWidth({ xs: 8 })).toBeCloseTo(66.666, 1);
             expect(calculateFlexWidth({ xs: 8, sm: 6 })).toBeCloseTo(50, 1);
         });
+        it("treats non-numeric grid values as the previous breakpoint fallback", () => {
+            expect(calculateFlexWidth({ xs: "invalid" })).toBe(100);
+            expect(calculateFlexWidth({ xs: 6, sm: "bad" })).toBe(50);
+        });
     });
 
     describe("addContainerElement", () => {
@@ -96,6 +107,7 @@ describe("elementHelpers", () => {
             expect(container.tagName).toBe("DIV");
             expect(container.style.flexBasis).toBe("50%");
             expect(container.style.maxWidth).toBe("50%");
+            expect(container.style.flexGrow).toBe("0");
             expect(container.style.padding).toBe("0.75rem 0px");
             expect(container.firstChild.firstChild).toBe(comp);
         });
@@ -113,6 +125,7 @@ describe("elementHelpers", () => {
             expect(el.tagName.toLowerCase()).toBe("custom-header");
             expect(el.getAttribute("id")).toBe("foo");
             expect(el.dataset.bar).toBe("baz");
+            expect(el.getAttribute("tagName")).toBe("custom-header");
         });
         it("throws for invalid tag name", () => {
             expect(() => createCustomElement("invalid!tag", {})).toThrow();

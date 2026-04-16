@@ -2,7 +2,8 @@ import {
     getDefaultTextResources,
     getTextResourceFromResourceBinding,
     getTextResources,
-    getTextResourcesFromResourceBindings
+    getTextResourcesFromResourceBindings,
+    isPlainObject
 } from "./textResourcesHelpers";
 
 describe("textResourcesHelpers", () => {
@@ -51,10 +52,20 @@ describe("textResourcesHelpers", () => {
             globalThis.defaultTextResources = { resources: [{ id: "baz", value: "qux" }] };
             expect(getTextResourceFromResourceBinding("baz")).toBe("qux");
         });
+        it("falls back to defaultTextResources if textResources is not set", () => {
+            delete globalThis.textResources;
+            globalThis.defaultTextResources = { resources: [{ id: "baz", value: "qux" }] };
+            expect(getTextResourceFromResourceBinding("baz")).toBe("qux");
+        });
         it("returns resourceBinding if not found anywhere", () => {
             globalThis.textResources = { resources: [] };
             globalThis.defaultTextResources = { resources: [] };
             expect(getTextResourceFromResourceBinding("notfound")).toBe("notfound");
+        });
+        it("returns resourceBinding if neither textResources nor defaultTextResources are set", () => {
+            delete globalThis.textResources;
+            delete globalThis.defaultTextResources;
+            expect(getTextResourceFromResourceBinding("myKey")).toBe("myKey");
         });
     });
 
@@ -75,6 +86,29 @@ describe("textResourcesHelpers", () => {
         it("handles nested resourceBindings objects", () => {
             const bindings = { a: "foo", nested: { b: "baz", c: "default" } };
             expect(getTextResourcesFromResourceBindings(bindings)).toEqual({ a: "bar", nested: { b: "qux", c: "fallback" } });
+        });
+        it("returns empty object for empty bindings", () => {
+            expect(getTextResourcesFromResourceBindings({})).toEqual({});
+        });
+    });
+
+    describe("isPlainObject", () => {
+        it("returns true for plain objects", () => {
+            expect(isPlainObject({})).toBe(true);
+            expect(isPlainObject({ a: 1 })).toBe(true);
+        });
+        it("returns false for null", () => {
+            expect(isPlainObject(null)).toBe(false);
+        });
+        it("returns false for arrays", () => {
+            expect(isPlainObject([])).toBe(false);
+            expect(isPlainObject([1, 2])).toBe(false);
+        });
+        it("returns false for primitives", () => {
+            expect(isPlainObject("string")).toBe(false);
+            expect(isPlainObject(42)).toBe(false);
+            expect(isPlainObject(true)).toBe(false);
+            expect(isPlainObject(undefined)).toBe(false);
         });
     });
 });

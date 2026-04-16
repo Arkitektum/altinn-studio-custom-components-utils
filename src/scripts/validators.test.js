@@ -10,6 +10,8 @@ describe("validators", () => {
             expect(isValidHeaderSize("H1")).toBe(true);
             expect(isValidHeaderSize("h2")).toBe(true);
             expect(isValidHeaderSize("H2")).toBe(true);
+            expect(isValidHeaderSize("h3")).toBe(true);
+            expect(isValidHeaderSize("H3")).toBe(true);
         });
         it("returns false for invalid header size", () => {
             expect(isValidHeaderSize("h7")).toBe(false);

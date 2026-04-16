@@ -33,6 +33,8 @@ describe("CustomElementHtmlAttributes", () => {
                 grid: { xs: 12 },
                 tableColumns: [{ key: "col1" }],
                 itemKey: "item-1",
+                itemTermKey: "term-1",
+                itemDescriptionKey: "desc-1",
                 dataItemKey: "data-1",
                 dataTitleItemKey: "title-1",
                 id: "id-1",
@@ -44,7 +46,8 @@ describe("CustomElementHtmlAttributes", () => {
                 resourceBindings: { title: "Title" },
                 resourceValues: { value: 123 },
                 enableLinks: true,
-                text: "Some text"
+                text: "Some text",
+                order: { fieldKey: "asc" }
             };
             const attrs = new CustomElementHtmlAttributes(props);
 
@@ -60,6 +63,8 @@ describe("CustomElementHtmlAttributes", () => {
             expect(attrs.grid).toBe(JSON.stringify(props.grid));
             expect(attrs.tableColumns).toBe(JSON.stringify(props.tableColumns));
             expect(attrs.itemKey).toBe("item-1");
+            expect(attrs.itemTermKey).toBe("term-1");
+            expect(attrs.itemDescriptionKey).toBe("desc-1");
             expect(attrs.dataItemKey).toBe("data-1");
             expect(attrs.dataTitleItemKey).toBe("title-1");
             expect(attrs.id).toBe("id-1");
@@ -72,6 +77,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(attrs.resourceValues).toBe(JSON.stringify(props.resourceValues));
             expect(attrs.enableLinks).toBe("true");
             expect(attrs.text).toBe("Some text");
+            expect(attrs.order).toBe(JSON.stringify(props.order));
         });
 
         it("should not set attributes if props are missing or falsy", () => {
@@ -242,6 +248,10 @@ describe("CustomElementHtmlAttributes", () => {
     describe("getFeedbackTypeAttributeFromProps", () => {
         it("should return feedbackType if valid", () => {
             expect(new CustomElementHtmlAttributes({}).getFeedbackTypeAttributeFromProps({ feedbackType: "error" })).toBe("error");
+            expect(new CustomElementHtmlAttributes({}).getFeedbackTypeAttributeFromProps({ feedbackType: "warning" })).toBe("warning");
+            expect(new CustomElementHtmlAttributes({}).getFeedbackTypeAttributeFromProps({ feedbackType: "success" })).toBe("success");
+            expect(new CustomElementHtmlAttributes({}).getFeedbackTypeAttributeFromProps({ feedbackType: "info" })).toBe("info");
+            expect(new CustomElementHtmlAttributes({}).getFeedbackTypeAttributeFromProps({ feedbackType: "default" })).toBe("default");
         });
         it('should return "default" if feedbackType is invalid', () => {
             expect(new CustomElementHtmlAttributes({}).getFeedbackTypeAttributeFromProps({ feedbackType: "invalid" })).toBe("default");
@@ -330,6 +340,36 @@ describe("CustomElementHtmlAttributes", () => {
         it("should return null if text is missing", () => {
             hasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getTextAttributeFromProps({})).toBeNull();
+        });
+    });
+
+    describe("getItemTermKeyAttributeFromProps", () => {
+        it("should return itemTermKey if has value", () => {
+            expect(new CustomElementHtmlAttributes({}).getItemTermKeyAttributeFromProps({ itemTermKey: "term" })).toBe("term");
+        });
+        it("should return null if itemTermKey is missing", () => {
+            hasValue.mockReturnValue(false);
+            expect(new CustomElementHtmlAttributes({}).getItemTermKeyAttributeFromProps({})).toBeNull();
+        });
+    });
+
+    describe("getItemDescriptionKeyAttributeFromProps", () => {
+        it("should return itemDescriptionKey if has value", () => {
+            expect(new CustomElementHtmlAttributes({}).getItemDescriptionKeyAttributeFromProps({ itemDescriptionKey: "desc" })).toBe("desc");
+        });
+        it("should return null if itemDescriptionKey is missing", () => {
+            hasValue.mockReturnValue(false);
+            expect(new CustomElementHtmlAttributes({}).getItemDescriptionKeyAttributeFromProps({})).toBeNull();
+        });
+    });
+
+    describe("getOrderAttributeFromProps", () => {
+        it("should return JSON string if order has value", () => {
+            expect(new CustomElementHtmlAttributes({}).getOrderAttributeFromProps({ order: { fieldKey: "asc" } })).toBe('{"fieldKey":"asc"}');
+        });
+        it("should return null if order is missing", () => {
+            hasValue.mockReturnValue(false);
+            expect(new CustomElementHtmlAttributes({}).getOrderAttributeFromProps({})).toBeNull();
         });
     });
 });
