@@ -45,6 +45,7 @@ const customElementTagNames = [
     "custom-group-samsvar-ansvarsomraade",
     "custom-group-samsvar-erklaeringer",
     "custom-group-sjekklistekrav",
+    "custom-group-sjekklistekrav-header-text",
     "custom-group-utfall-svar-type",
     "custom-group-utfall-svar",
     "custom-group-vannforsyning",
