@@ -30,7 +30,6 @@ export default class CustomElementHtmlAttributes {
      * @param {boolean} [props.hideOrgNr] - Determines if the organization number should be hidden.
      * @param {string} [props.format] - The format attribute of the component.
      * @param {boolean} [props.showRowNumbers] - Indicates if row numbers should be shown.
-     * @param {string} [props.partType] - The type of part for the component.
      * @param {Object} [props.resourceBindings] - Text resource bindings for the component.
      * @param {Object} [props.resourceValues] - Resource values associated with the component.
      * @param {boolean} [props.enableLinks] - Indicates if links should be enabled in the component.
@@ -59,7 +58,6 @@ export default class CustomElementHtmlAttributes {
         const hideOrgNr = this.getHideOrgNrAttributeFromProps(props);
         const format = this.getFormatAttributeFromProps(props);
         const showRowNumbers = this.getShowRowNumbersAttributeFromProps(props);
-        const partType = this.getPartTypeAttributeFromProps(props);
         const resourceBindings = this.getResourceBindingsFromProps(props);
         const resourceValues = this.getResourceValuesFromProps(props);
         const enableLinks = this.getEnableLinksFromProps(props);
@@ -128,9 +126,6 @@ export default class CustomElementHtmlAttributes {
         }
         if (showRowNumbers) {
             this.showRowNumbers = showRowNumbers;
-        }
-        if (partType) {
-            this.partType = partType;
         }
         if (resourceBindings) {
             this.resourceBindings = resourceBindings;
@@ -402,16 +397,6 @@ export default class CustomElementHtmlAttributes {
      */
     getShowRowNumbersAttributeFromProps(props) {
         return props?.showRowNumbers?.toString() === "true" ? "true" : null;
-    }
-
-    /**
-     * Retrieves the 'partType' attribute from the provided props object if it has a value.
-     *
-     * @param {Object} props - The properties object that may contain the 'partType' attribute.
-     * @returns {*} The value of 'partType' if it exists and has a value; otherwise, returns null.
-     */
-    getPartTypeAttributeFromProps(props) {
-        return hasValue(props?.partType) ? props?.partType : null;
     }
 
     /**

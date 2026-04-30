@@ -42,7 +42,6 @@ describe("CustomElementHtmlAttributes", () => {
                 hideOrgNr: true,
                 format: "date",
                 showRowNumbers: true,
-                partType: "part-1",
                 resourceBindings: { title: "Title" },
                 resourceValues: { value: 123 },
                 enableLinks: true,
@@ -72,7 +71,6 @@ describe("CustomElementHtmlAttributes", () => {
             expect(attrs.hideOrgNr).toBe("true");
             expect(attrs.format).toBe("date");
             expect(attrs.showRowNumbers).toBe("true");
-            expect(attrs.partType).toBe("part-1");
             expect(attrs.resourceBindings).toBe(JSON.stringify(props.resourceBindings));
             expect(attrs.resourceValues).toBe(JSON.stringify(props.resourceValues));
             expect(attrs.enableLinks).toBe("true");
@@ -290,16 +288,6 @@ describe("CustomElementHtmlAttributes", () => {
         });
         it("should return null if showRowNumbers is false", () => {
             expect(new CustomElementHtmlAttributes({}).getShowRowNumbersAttributeFromProps({ showRowNumbers: false })).toBeNull();
-        });
-    });
-
-    describe("getPartTypeAttributeFromProps", () => {
-        it("should return partType if has value", () => {
-            expect(new CustomElementHtmlAttributes({}).getPartTypeAttributeFromProps({ partType: "foo" })).toBe("foo");
-        });
-        it("should return null if partType is missing", () => {
-            hasValue.mockReturnValue(false);
-            expect(new CustomElementHtmlAttributes({}).getPartTypeAttributeFromProps({})).toBeNull();
         });
     });
 
