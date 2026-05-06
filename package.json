@@ -28,10 +28,10 @@
     "homepage": "https://github.com/Arkitektum/altinn-studio-custom-components-utils#readme",
     "devDependencies": {
         "@babel/core": "^7.29.0",
-        "@babel/preset-env": "^7.29.2",
+        "@babel/preset-env": "^7.29.5",
         "@eslint/js": "^10.0.1",
-        "eslint": "^10.2.1",
-        "globals": "^17.5.0",
+        "eslint": "^10.3.0",
+        "globals": "^17.6.0",
         "jest": "^30.3.0",
         "jest-environment-jsdom": "^30.3.0",
         "tsup": "^8.5.1",
