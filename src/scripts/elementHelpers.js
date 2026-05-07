@@ -31,11 +31,11 @@ export function appendChildren(parent, children) {
  * @param {Object} attributes - An object containing key-value pairs of attributes to set.
  */
 export function setAttributes(element, attributes) {
-    if (!element || !(element instanceof HTMLElement)) {
-        throw new Error("Invalid element provided. Expected an instance of HTMLElement.");
-    }
-    if (!attributes || typeof attributes !== "object") {
+    if (!element || !attributes || typeof attributes !== "object") {
         return;
+    }
+    if (element && !(element instanceof HTMLElement)) {
+        throw new Error("Invalid element provided. Expected an instance of HTMLElement.");
     }
     for (const [key, value] of Object.entries(attributes)) {
         if (value === null || value === undefined) {
@@ -52,11 +52,11 @@ export function setAttributes(element, attributes) {
  * @param {Object} style - An object containing CSS property-value pairs.
  */
 export function addStyle(element, style) {
-    if (!element || !(element instanceof HTMLElement)) {
-        throw new Error("Invalid element provided. Expected an instance of HTMLElement.");
-    }
-    if (!style || typeof style !== "object") {
+    if (!element || !style || typeof style !== "object") {
         return;
+    }
+    if (element && !(element instanceof HTMLElement)) {
+        throw new Error("Invalid element provided. Expected an instance of HTMLElement.");
     }
     for (const key of Object.keys(style)) {
         element.style[key] = style[key];
