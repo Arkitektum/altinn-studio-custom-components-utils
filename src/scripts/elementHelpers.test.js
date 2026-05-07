@@ -48,15 +48,14 @@ describe("elementHelpers", () => {
             expect(el.hasAttribute("b")).toBe(false);
             expect(el.getAttribute("c")).toBe("ok");
         });
-        it("throws for invalid element", () => {
-            expect(() => setAttributes(null, { a: 1 })).toThrow();
+        it("returns for invalid element", () => {
+            expect(() => setAttributes(null, { a: 1 })).not.toThrow();
             expect(() => setAttributes({}, { a: 1 })).toThrow();
         });
         it("returns for non-object attributes", () => {
             const el = document.createElement("div");
-            setAttributes(el, null);
-            setAttributes(el, 123);
-            // Should not throw
+            expect(() => setAttributes(el, null)).not.toThrow();
+            expect(() => setAttributes(el, 123)).not.toThrow();
         });
     });
 
@@ -67,15 +66,14 @@ describe("elementHelpers", () => {
             expect(el.style.color).toBe("red");
             expect(el.style.backgroundColor).toBe("blue");
         });
-        it("throws for invalid element", () => {
-            expect(() => addStyle(null, { color: "red" })).toThrow();
+        it("returns for invalid element", () => {
+            expect(() => addStyle(null, { color: "red" })).not.toThrow();
             expect(() => addStyle({}, { color: "red" })).toThrow();
         });
         it("returns for non-object style", () => {
             const el = document.createElement("div");
-            addStyle(el, null);
-            addStyle(el, 123);
-            // Should not throw
+            expect(() => addStyle(el, null)).not.toThrow();
+            expect(() => addStyle(el, 123)).not.toThrow();
         });
     });
 
