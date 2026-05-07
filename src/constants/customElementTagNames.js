@@ -34,6 +34,7 @@ const customElementTagNames = [
     "custom-group-adkomst",
     "custom-group-ansvarsrett-erklaeringer",
     "custom-group-avloep",
+    "custom-group-dispensasjon-oversikt",
     "custom-group-ettersending",
     "custom-group-kontroll-ansvarsomraade",
     "custom-group-kontroll-erklaeringer",
