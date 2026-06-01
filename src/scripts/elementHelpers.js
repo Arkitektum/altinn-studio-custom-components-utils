@@ -34,7 +34,7 @@ export function setAttributes(element, attributes) {
     if (!element || !attributes || typeof attributes !== "object") {
         return;
     }
-    if (element && !(element instanceof HTMLElement)) {
+    if (!(element instanceof HTMLElement)) {
         throw new Error("Invalid element provided. Expected an instance of HTMLElement.");
     }
     for (const [key, value] of Object.entries(attributes)) {
@@ -55,7 +55,7 @@ export function addStyle(element, style) {
     if (!element || !style || typeof style !== "object") {
         return;
     }
-    if (element && !(element instanceof HTMLElement)) {
+    if (!(element instanceof HTMLElement)) {
         throw new Error("Invalid element provided. Expected an instance of HTMLElement.");
     }
     for (const key of Object.keys(style)) {
