@@ -27,13 +27,13 @@
     },
     "homepage": "https://github.com/Arkitektum/altinn-studio-custom-components-utils#readme",
     "devDependencies": {
-        "@babel/core": "^7.29.0",
-        "@babel/preset-env": "^7.29.5",
+        "@babel/core": "^7.29.7",
+        "@babel/preset-env": "^7.29.7",
         "@eslint/js": "^10.0.1",
-        "eslint": "^10.3.0",
+        "eslint": "^10.4.1",
         "globals": "^17.6.0",
-        "jest": "^30.3.0",
-        "jest-environment-jsdom": "^30.3.0",
+        "jest": "^30.4.2",
+        "jest-environment-jsdom": "^30.4.1",
         "tsup": "^8.5.1",
         "typescript": "^6.0.3"
     },
