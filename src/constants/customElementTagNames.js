@@ -69,6 +69,7 @@ const customElementTagNames = [
     "custom-table-nabo-gjenboer-eiendom",
     "custom-table-omraaderisiko",
     "custom-table-part",
+    "custom-table-part-gjennomfoeringsplan",
     "custom-table-plan",
     "custom-dispensasjon",
     "custom-dispensasjonsvarsel",
