@@ -1,6 +1,6 @@
 {
     "name": "@arkitektum/altinn-studio-custom-components-utils",
-    "version": "1.4.10",
+    "version": "1.4.11",
     "type": "module",
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
