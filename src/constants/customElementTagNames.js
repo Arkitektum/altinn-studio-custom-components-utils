@@ -16,6 +16,8 @@ const customElementTagNames = [
     "custom-field-boolean-text",
     "custom-field-count-data",
     "custom-field-data",
+    "custom-field-grid",
+    "custom-field-image",
     "custom-field-list-data",
     "custom-field-kode",
     "custom-field-kommunens-saksnummer",
