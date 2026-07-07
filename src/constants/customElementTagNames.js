@@ -23,6 +23,7 @@ const customElementTagNames = [
     "custom-field-kommunens-saksnummer",
     "custom-field-part-navn",
     "custom-field-prosjekt",
+    "custom-field-row",
     "custom-field-telefonnummer",
     "custom-field-utfall-svar-status",
     "custom-grouplist-ansvarsomraade-type",
