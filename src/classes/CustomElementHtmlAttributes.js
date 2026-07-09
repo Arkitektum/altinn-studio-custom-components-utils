@@ -161,15 +161,11 @@ export default class CustomElementHtmlAttributes {
                 const formData = props?.formData.toString();
                 return JSON.stringify(formData);
             } else if (typeof props?.formData === "object") {
-                const formData = {};
-                for (const key of Object.keys(props.formData)) {
-                    formData[key] = props.formData[key];
-                }
-                return JSON.stringify(formData);
+                // Stringify directly so arrays keep their array structure (a manual key copy would turn [1,2] into {"0":1,"1":2}).
+                return JSON.stringify(props.formData);
             }
-        } else {
-            return null;
         }
+        return null;
     }
 
     getIsChildComponentAttributeFromProps(props) {
