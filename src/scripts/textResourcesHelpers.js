@@ -1,7 +1,7 @@
 /**
- * Retrieves the global text resources from the window object if available.
+ * Retrieves the global text resources from `globalThis` if available.
  *
- * @returns {Array} An array of text resources if `window.textResources` exists, otherwise an empty array.
+ * @returns {Array} An array of text resources if `globalThis.textResources` exists, otherwise an empty array.
  */
 export function getTextResources() {
     return typeof globalThis !== "undefined" && globalThis.textResources ? globalThis.textResources : [];
