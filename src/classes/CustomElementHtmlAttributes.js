@@ -34,7 +34,7 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} [props.resourceValues] - Resource values associated with the component.
      * @param {boolean} [props.enableLinks] - Indicates if links should be enabled in the component.
      * @param {string} [props.text] - The text content for the component.
-     * @param {string} [props.sortKey] - The key used for sorting data in the component.
+     * @param {Object} [props.order] - The ordering configuration (e.g. sort key and direction) for the component.
      */
     constructor(props) {
         const isChildComponent = this.getIsChildComponentAttributeFromProps(props);
@@ -161,15 +161,11 @@ export default class CustomElementHtmlAttributes {
                 const formData = props?.formData.toString();
                 return JSON.stringify(formData);
             } else if (typeof props?.formData === "object") {
-                const formData = {};
-                for (const key of Object.keys(props.formData)) {
-                    formData[key] = props.formData[key];
-                }
-                return JSON.stringify(formData);
+                // Stringify directly so arrays keep their array structure (a manual key copy would turn [1,2] into {"0":1,"1":2}).
+                return JSON.stringify(props.formData);
             }
-        } else {
-            return null;
         }
+        return null;
     }
 
     getIsChildComponentAttributeFromProps(props) {
@@ -448,10 +444,10 @@ export default class CustomElementHtmlAttributes {
     }
 
     /**
-     * Retrieves the 'sortKey' attribute from the provided props object if it has a value.
+     * Retrieves the 'order' attribute from the provided props object if it has a value.
      *
-     * @param {Object} props - The properties object that may contain a 'sortKey' attribute.
-     * @returns {*} The value of 'order' if it exists and passes the hasValue check; otherwise, returns null.
+     * @param {Object} props - The properties object that may contain an 'order' attribute.
+     * @returns {string|null} The JSON-stringified value of 'order' if it exists and passes the hasValue check; otherwise, null.
      */
     getOrderAttributeFromProps(props) {
         return hasValue(props?.order) ? JSON.stringify(props?.order) : null;

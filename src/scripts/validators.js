@@ -12,7 +12,7 @@ import { validSizeValues } from "../constants/validSizeValues";
  * @returns {boolean} Returns `true` if the size is valid, otherwise `false`.
  */
 export function isValidHeaderSize(size) {
-    return hasValue(size) && validSizeValues.includes(size.toLowerCase());
+    return hasValue(size) && validSizeValues.includes(String(size).toLowerCase());
 }
 
 /**

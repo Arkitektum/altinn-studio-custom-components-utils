@@ -98,12 +98,16 @@ export function getValueFromDataKey(data, dataKey) {
  * Retrieves data for a given component based on its data model bindings.
  *
  * @param {Object} component - The component object containing data model bindings.
- * @param {Array<Object>} [dataModels] - Optional array of data model objects. If not provided, `getDataModels()` will be called to retrieve them.
+ * @param {Array<Object>} [dataModels=[]] - Optional array of data model objects. Defaults to an empty array when omitted.
  * @param {string} [dataType] - Optional data type to filter the data models. If provided, the function will look for a data model with a matching `dataType` property.
  * @param {Object} [selectedFileNames] - Optional object mapping data types to selected file names. If provided, the function will attempt to retrieve data from the specified file for the matching data type.
  * @returns {Object} An object mapping each binding key to its corresponding data value.
  */
 export function getDataForComponent(component, dataModels, dataType, selectedFileNames) {
+    // Guard against a missing data-model list so callers that omit it (per the optional signature) don't crash on index/findIndex.
+    if (!Array.isArray(dataModels)) {
+        dataModels = [];
+    }
     const data = {};
     component?.dataModelBindings &&
         Object.keys(component?.dataModelBindings).forEach((key) => {
