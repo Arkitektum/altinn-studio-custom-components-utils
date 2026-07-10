@@ -102,6 +102,7 @@ export function calculateFlexWidth(grid) {
  */
 export function addContainerElement(component, grid) {
     const containerElement = document.createElement("div");
+    containerElement.setAttribute("data-summary-target", component.id);
     const formContentElement = document.createElement("div");
     formContentElement.appendChild(component);
     containerElement.appendChild(formContentElement);
