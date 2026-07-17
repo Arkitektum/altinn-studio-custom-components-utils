@@ -22,7 +22,9 @@
     },
     "scripts": {
         "build": "tsup",
-        "test": "jest"
+        "test": "jest",
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit"
     },
     "repository": {
         "type": "git",
