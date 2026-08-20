@@ -148,6 +148,11 @@ export default class CustomElementHtmlAttributes {
      * Extracts and formats the `formData` attribute from the given props.
      * Converts the `formData` into a JSON string based on its type.
      *
+     * A bare boolean is deliberately not serialized, even though `hasValue` accepts one. Boolean form data always
+     * arrives inside an object (`formData.simpleBinding`), and the components package uses the `hasValue(x) && x`
+     * idiom, which yields `false` for form data that is absent — serializing that would emit `formData="false"` and
+     * make an empty component look populated.
+     *
      * @param {Object} props - The properties object containing the `formData` attribute.
      * @param {string|number|Object} [props.formData] - The form data to be processed.
      * @returns {string|null} A JSON string representation of the `formData` if it exists and is valid, otherwise `null`.

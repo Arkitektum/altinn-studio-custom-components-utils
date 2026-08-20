@@ -100,6 +100,19 @@ describe("CustomElementHtmlAttributes", () => {
             hasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({})).toBeNull();
         });
+        it("should not serialize a bare boolean, even though hasValue accepts one", () => {
+            // Boolean form data always arrives inside an object, and the components package represents absent form
+            // data as `false` via `hasValue(x) && x`. Emitting formData="false" would make an empty component look
+            // populated, so a bare boolean is dropped on purpose.
+            expect(hasValue(false)).toBe(true);
+            expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: false })).toBeNull();
+            expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: true })).toBeNull();
+        });
+        it("should keep a boolean that arrives inside an object", () => {
+            expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: { simpleBinding: false } })).toBe(
+                '{"simpleBinding":false}'
+            );
+        });
     });
 
     describe("getIsChildComponentAttributeFromProps", () => {
