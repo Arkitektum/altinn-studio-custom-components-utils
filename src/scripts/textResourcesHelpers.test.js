@@ -90,6 +90,22 @@ describe("textResourcesHelpers", () => {
         it("returns empty object for empty bindings", () => {
             expect(getTextResourcesFromResourceBindings({})).toEqual({});
         });
+        it("returns an empty object when there are no bindings at all", () => {
+            // Resource bindings are optional, so a missing value must not throw: the TypeError would escape the
+            // component constructor and abort the render.
+            expect(getTextResourcesFromResourceBindings(undefined)).toEqual({});
+            expect(getTextResourcesFromResourceBindings(null)).toEqual({});
+        });
+        it("returns an empty object for non-object bindings instead of walking them", () => {
+            // A bare Object.keys("ab") would yield { 0: "a", 1: "b" }.
+            expect(getTextResourcesFromResourceBindings("foo")).toEqual({});
+            expect(getTextResourcesFromResourceBindings(42)).toEqual({});
+            expect(getTextResourcesFromResourceBindings(["foo"])).toEqual({});
+        });
+        it("keeps nested bindings working when a nested value is absent", () => {
+            const bindings = { a: "foo", nested: { b: "baz" } };
+            expect(getTextResourcesFromResourceBindings(bindings)).toEqual({ a: "bar", nested: { b: "qux" } });
+        });
     });
 
     describe("isPlainObject", () => {

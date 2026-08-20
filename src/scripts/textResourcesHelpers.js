@@ -49,10 +49,18 @@ export function isPlainObject(value) {
  * Iterates over each key in the resourceBindings object and uses
  * getTextResourceFromResourceBinding to extract the corresponding text resource.
  *
- * @param {Object} resourceBindings - An object where each key maps to a resource binding.
- * @returns {Object} An object mapping each key to its corresponding text resource.
+ * Resource bindings are optional throughout the component classes, so anything that is not a plain object — most
+ * commonly `undefined` for a component or data item without bindings — yields an empty result. A bare `Object.keys`
+ * would throw a TypeError instead, and that throw escapes the component constructor and aborts the whole render.
+ * Rejecting non-objects also stops a stray string from being walked per character (`"ab"` → `{0: "a", 1: "b"}`).
+ *
+ * @param {Object} [resourceBindings] - An object where each key maps to a resource binding.
+ * @returns {Object} An object mapping each key to its corresponding text resource, or `{}` when there are none.
  */
 export function getTextResourcesFromResourceBindings(resourceBindings) {
+    if (!isPlainObject(resourceBindings)) {
+        return {};
+    }
     const texts = {};
     for (const key of Object.keys(resourceBindings)) {
         texts[key] = isPlainObject(resourceBindings[key])
