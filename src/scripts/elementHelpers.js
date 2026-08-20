@@ -3,19 +3,22 @@ import { hasValue } from "./dataHelpers.js";
 import { isValidTagName } from "./validators.js";
 
 /**
- * Appends an array of children to a parent element. If a child is an instance of HTMLElement,
- * it is appended using `appendChild`. Otherwise, the child is converted to a text node and
- * appended to the parent using `appendChild`.
+ * Appends an array of children to a parent element. A child that is already a DOM node is appended as-is;
+ * anything else is stringified into a text node. Falsy children are skipped, so callers can pass the result of a
+ * conditional directly.
+ *
+ * The check is against `Node` rather than `HTMLElement` so that text nodes, SVG elements, fragments and comments
+ * are appended rather than stringified — `HTMLElement` would turn a text node into the literal "[object Text]".
  *
  * @param {HTMLElement} parent - The parent element to which the children will be appended.
- * @param {Array<HTMLElement|string>} children - An array of children to append. Each child can be
- * either an HTMLElement or a string.
+ * @param {Array<Node|string|number>} children - An array of children to append. Each child can be a DOM node or a
+ * value to render as text.
  * @returns {HTMLElement} The parent element after appending the children.
  */
 export function appendChildren(parent, children) {
     const filteredChildren = children.filter((child) => !!child);
     for (const child of filteredChildren) {
-        if (child instanceof HTMLElement) {
+        if (child instanceof Node) {
             parent.appendChild(child);
         } else {
             parent.appendChild(document.createTextNode(String(child)));

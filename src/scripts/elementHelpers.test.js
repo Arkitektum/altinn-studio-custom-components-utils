@@ -32,6 +32,30 @@ describe("elementHelpers", () => {
             expect(parent.childNodes[0].nodeType).toBe(Node.TEXT_NODE);
             expect(parent.childNodes[0].textContent).toBe("42");
         });
+        it("appends a text node as-is rather than stringifying it", () => {
+            // An HTMLElement-only check would append the literal "[object Text]".
+            const parent = document.createElement("div");
+            const textNode = document.createTextNode("hei");
+            appendChildren(parent, [textNode]);
+            expect(parent.childNodes[0]).toBe(textNode);
+            expect(parent.textContent).toBe("hei");
+        });
+        it("appends non-HTML elements such as SVG as-is", () => {
+            const parent = document.createElement("div");
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            expect(svg instanceof HTMLElement).toBe(false);
+            appendChildren(parent, [svg]);
+            expect(parent.childNodes[0]).toBe(svg);
+            expect(parent.textContent).toBe("");
+        });
+        it("appends a document fragment's children", () => {
+            const parent = document.createElement("div");
+            const fragment = document.createDocumentFragment();
+            fragment.appendChild(document.createElement("span"));
+            fragment.appendChild(document.createElement("b"));
+            appendChildren(parent, [fragment]);
+            expect(parent.children.length).toBe(2);
+        });
     });
 
     describe("setAttributes", () => {
