@@ -1,6 +1,6 @@
 // Functions
-import { hasValue } from "./dataHelpers";
-import { isValidTagName } from "./validators";
+import { hasValue } from "./dataHelpers.js";
+import { isValidTagName } from "./validators.js";
 
 /**
  * Appends an array of children to a parent element. If a child is an instance of HTMLElement,

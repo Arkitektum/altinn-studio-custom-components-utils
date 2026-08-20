@@ -1,7 +1,7 @@
-import { isValidHeaderSize, isValidTagName } from "./validators";
+import { isValidHeaderSize, isValidTagName } from "./validators.js";
 
-jest.mock("../constants/validSizeValues", () => ({ validSizeValues: ["h1", "h2", "h3"] }));
-jest.mock("../constants/customElementTagNames", () => ({ customElementTagNames: ["custom-header", "custom-footer"] }));
+jest.mock("../constants/validSizeValues.js", () => ({ validSizeValues: ["h1", "h2", "h3"] }));
+jest.mock("../constants/customElementTagNames.js", () => ({ customElementTagNames: ["custom-header", "custom-footer"] }));
 
 describe("validators", () => {
     describe("isValidHeaderSize", () => {

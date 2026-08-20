@@ -1,4 +1,4 @@
-import { getDataForComponent, getValueFromDataKey, hasValue } from "./dataHelpers";
+import { getDataForComponent, getValueFromDataKey, hasValue } from "./dataHelpers.js";
 
 describe("dataHelpers", () => {
     describe("hasValue", () => {

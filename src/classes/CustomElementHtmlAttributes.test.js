@@ -1,4 +1,4 @@
-import CustomElementHtmlAttributes from "./CustomElementHtmlAttributes";
+import CustomElementHtmlAttributes from "./CustomElementHtmlAttributes.js";
 import { hasValue } from "../scripts/dataHelpers.js";
 import { isValidHeaderSize } from "../scripts/validators.js";
 

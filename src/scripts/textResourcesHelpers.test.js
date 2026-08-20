@@ -4,7 +4,7 @@ import {
     getTextResources,
     getTextResourcesFromResourceBindings,
     isPlainObject
-} from "./textResourcesHelpers";
+} from "./textResourcesHelpers.js";
 
 describe("textResourcesHelpers", () => {
     let originalTextResources;

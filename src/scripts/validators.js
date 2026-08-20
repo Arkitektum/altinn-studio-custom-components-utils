@@ -1,9 +1,9 @@
 // Functions
-import { hasValue } from "./dataHelpers";
+import { hasValue } from "./dataHelpers.js";
 
 // Constants
-import { customElementTagNames } from "../constants/customElementTagNames";
-import { validSizeValues } from "../constants/validSizeValues";
+import { customElementTagNames } from "../constants/customElementTagNames.js";
+import { validSizeValues } from "../constants/validSizeValues.js";
 
 /**
  * Checks if the provided header size is valid.

@@ -1,4 +1,4 @@
-import CustomElementHtmlAttributes from "./classes/CustomElementHtmlAttributes";
+import CustomElementHtmlAttributes from "./classes/CustomElementHtmlAttributes.js";
 export { CustomElementHtmlAttributes };
 
 export { getDataForComponent, hasValue, getValueFromDataKey } from "./scripts/dataHelpers.js";

@@ -1,4 +1,4 @@
-import { addContainerElement, addStyle, appendChildren, calculateFlexWidth, createCustomElement, setAttributes } from "./elementHelpers";
+import { addContainerElement, addStyle, appendChildren, calculateFlexWidth, createCustomElement, setAttributes } from "./elementHelpers.js";
 
 describe("elementHelpers", () => {
     describe("appendChildren", () => {
