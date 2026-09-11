@@ -31,8 +31,17 @@ jobs:
       - name: Verify Yarn version
         run: yarn --version
 
+      # A registry timeout can crash Yarn outright instead of failing one fetch,
+      # so retry the whole install rather than trusting Yarn's own retries to
+      # recover.
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          for attempt in 1 2 3; do
+              yarn install --immutable && exit 0
+              echo "::warning::yarn install failed (attempt $attempt/3), retrying in 15s"
+              sleep 15
+          done
+          exit 1
 
       - name: Lint
         run: yarn lint
