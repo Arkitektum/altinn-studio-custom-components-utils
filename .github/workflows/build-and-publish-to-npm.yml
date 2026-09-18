@@ -17,11 +17,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v6
 
+            # No registry-url here on purpose: it makes setup-node write an
+            # .npmrc with //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN},
+            # which makes npm think the registry already has auth configured and
+            # skip the OIDC exchange that trusted publishing relies on.
             - name: Setup Node.js
               uses: actions/setup-node@v6
               with:
                   node-version: "24"
-                  registry-url: https://registry.npmjs.org/
 
             # Enable Corepack and activate the Yarn version from package.json
             - name: Enable Corepack & activate Yarn 4
@@ -48,15 +51,14 @@ jobs:
               if: ${{ success() }}
               run: yarn build
 
-            - name: Configure npm auth
+            # Trusted publishing needs npm >= 11.5.1 for the OIDC exchange.
+            - name: Ensure npm supports trusted publishing
               run: |
-                  echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-                  npm whoami
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
+                  npm install -g npm@latest
+                  npm --version
 
+            # No NODE_AUTH_TOKEN: npm authenticates through OIDC as the trusted
+            # publisher. Even an empty token env var disables that exchange.
             - name: Publish to npm
               if: ${{ success() }}
               run: npm publish --provenance --access public
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_NPM_TOKEN }}
