@@ -154,11 +154,12 @@ export function addContainerElement(component: HTMLElement, grid?: Grid | null):
  * Creates a custom element with the given tag name and attributes.
  *
  * @param tagName - The tag name to create, which must be one this ecosystem defines.
- * @param htmlAttributes - Attributes to set on the created element.
+ * @param htmlAttributes - Attributes to set on the created element. Typed as a plain object rather than a
+ *   Record, because callers pass a CustomElementHtmlAttributes instance and a class has no index signature.
  * @throws If the tag name is not on the allow-list.
  * @returns The created element.
  */
-export function createCustomElement(tagName: string, htmlAttributes?: Record<string, unknown>): HTMLElement {
+export function createCustomElement(tagName: string, htmlAttributes?: object): HTMLElement {
     if (!isValidTagName(tagName)) {
         throw new Error(`Invalid tag name ${tagName}`);
     }
