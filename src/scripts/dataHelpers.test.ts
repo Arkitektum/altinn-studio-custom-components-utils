@@ -1,4 +1,5 @@
-import { getDataForComponent, getValueFromDataKey, hasValue } from "./dataHelpers.js";
+import { describe, expect, it } from "@jest/globals";
+import { getDataForComponent, getValueFromDataKey, hasValue } from "./dataHelpers.ts";
 
 describe("dataHelpers", () => {
     describe("hasValue", () => {

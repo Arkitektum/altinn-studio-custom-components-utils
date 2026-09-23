@@ -1,5 +1,5 @@
 // Functions
-import { hasValue } from "./dataHelpers.js";
+import { hasValue } from "./dataHelpers.ts";
 
 // Constants
 import { customElementTagNames } from "../constants/customElementTagNames.ts";

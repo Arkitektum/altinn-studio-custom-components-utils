@@ -1,12 +1,12 @@
 import CustomElementHtmlAttributes from "./CustomElementHtmlAttributes.js";
-import { hasValue } from "../scripts/dataHelpers.js";
+import { hasValue } from "../scripts/dataHelpers.ts";
 import { isValidHeaderSize } from "../scripts/validators.ts";
 
 // Mock the imported helpers
 jest.mock("../scripts/validators.ts", () => ({
     isValidHeaderSize: jest.fn((size) => ["h1", "h2", "h3", "h4", "h5", "h6"].includes((size || "").toLowerCase()))
 }));
-jest.mock("../scripts/dataHelpers.js", () => ({
+jest.mock("../scripts/dataHelpers.ts", () => ({
     hasValue: jest.fn((val) => val !== undefined && val !== null && val !== "")
 }));
 

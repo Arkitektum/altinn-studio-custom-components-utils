@@ -1,5 +1,5 @@
 // Functions
-import { hasValue } from "../scripts/dataHelpers.js";
+import { hasValue } from "../scripts/dataHelpers.ts";
 import { isValidHeaderSize } from "../scripts/validators.ts";
 
 /**
