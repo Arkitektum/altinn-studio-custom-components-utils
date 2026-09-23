@@ -1,4 +1,5 @@
-import { isValidHeaderSize, isValidTagName } from "./validators.js";
+import { describe, expect, it, jest } from "@jest/globals";
+import { isValidHeaderSize, isValidTagName } from "./validators.ts";
 
 jest.mock("../constants/validSizeValues.ts", () => ({ validSizeValues: ["h1", "h2", "h3"] }));
 jest.mock("../constants/customElementTagNames.ts", () => ({ customElementTagNames: ["custom-header", "custom-footer"] }));
