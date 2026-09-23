@@ -2,8 +2,8 @@
 import { hasValue } from "./dataHelpers.js";
 
 // Constants
-import { customElementTagNames } from "../constants/customElementTagNames.js";
-import { validSizeValues } from "../constants/validSizeValues.js";
+import { customElementTagNames } from "../constants/customElementTagNames.ts";
+import { validSizeValues } from "../constants/validSizeValues.ts";
 
 /**
  * Checks if the provided header size is valid.

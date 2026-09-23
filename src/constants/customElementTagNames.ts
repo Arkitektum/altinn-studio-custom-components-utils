@@ -1,4 +1,5 @@
-const customElementTagNames = [
+/** Every custom element this ecosystem defines. The allow-list that createCustomElement and isValidTagName check against. */
+const customElementTagNames: string[] = [
     "custom-description-list",
     "custom-description-list-data",
     "custom-divider",
