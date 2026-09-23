@@ -21,7 +21,8 @@ export default defineConfig([
         }
     },
     {
-        ignores: ["dist/**", "docs/**", "node_modules/", "**/vendor/*.js"]
+        // coverage/ holds jest's generated report, which carries its own eslint directives and is not ours to lint.
+        ignores: ["dist/**", "docs/**", "coverage/**", "node_modules/", "**/vendor/*.js"]
     },
     {
         files: ["**/*.test.{js,ts}", "**/*.spec.{js,ts}"],
