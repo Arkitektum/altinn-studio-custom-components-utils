@@ -1,83 +1,87 @@
+import { afterEach, beforeEach, describe, expect, it } from "@jest/globals";
 import {
     getDefaultTextResources,
     getTextResourceFromResourceBinding,
     getTextResources,
     getTextResourcesFromResourceBindings,
     isPlainObject
-} from "./textResourcesHelpers.js";
+} from "./textResourcesHelpers.ts";
+
+/** The two globals the app sets before the components render, which these tests move about. */
+const testGlobals = globalThis as { textResources?: unknown; defaultTextResources?: unknown };
 
 describe("textResourcesHelpers", () => {
     let originalTextResources;
     let originalDefaultTextResources;
 
     beforeEach(() => {
-        originalTextResources = globalThis.textResources;
-        originalDefaultTextResources = globalThis.defaultTextResources;
+        originalTextResources = testGlobals.textResources;
+        originalDefaultTextResources = testGlobals.defaultTextResources;
     });
 
     afterEach(() => {
-        globalThis.textResources = originalTextResources;
-        globalThis.defaultTextResources = originalDefaultTextResources;
+        testGlobals.textResources = originalTextResources;
+        testGlobals.defaultTextResources = originalDefaultTextResources;
     });
 
     describe("getTextResources", () => {
         it("returns textResources from globalThis if present", () => {
-            globalThis.textResources = [1, 2, 3];
+            testGlobals.textResources = [1, 2, 3];
             expect(getTextResources()).toEqual([1, 2, 3]);
         });
         it("returns empty array if not present", () => {
-            delete globalThis.textResources;
+            delete testGlobals.textResources;
             expect(getTextResources()).toEqual([]);
         });
     });
 
     describe("getDefaultTextResources", () => {
         it("returns defaultTextResources from globalThis if present", () => {
-            globalThis.defaultTextResources = [4, 5, 6];
+            testGlobals.defaultTextResources = [4, 5, 6];
             expect(getDefaultTextResources()).toEqual([4, 5, 6]);
         });
         it("returns empty array if not present", () => {
-            delete globalThis.defaultTextResources;
+            delete testGlobals.defaultTextResources;
             expect(getDefaultTextResources()).toEqual([]);
         });
     });
 
     describe("getTextResourceFromResourceBinding", () => {
         it("returns value from textResources if found", () => {
-            globalThis.textResources = { resources: [{ id: "foo", value: "bar" }] };
+            testGlobals.textResources = { resources: [{ id: "foo", value: "bar" }] };
             expect(getTextResourceFromResourceBinding("foo")).toBe("bar");
         });
         it("falls back to defaultTextResources if not found in textResources", () => {
-            globalThis.textResources = { resources: [{ id: "foo", value: "bar" }] };
-            globalThis.defaultTextResources = { resources: [{ id: "baz", value: "qux" }] };
+            testGlobals.textResources = { resources: [{ id: "foo", value: "bar" }] };
+            testGlobals.defaultTextResources = { resources: [{ id: "baz", value: "qux" }] };
             expect(getTextResourceFromResourceBinding("baz")).toBe("qux");
         });
         it("falls back to defaultTextResources if textResources is not set", () => {
-            delete globalThis.textResources;
-            globalThis.defaultTextResources = { resources: [{ id: "baz", value: "qux" }] };
+            delete testGlobals.textResources;
+            testGlobals.defaultTextResources = { resources: [{ id: "baz", value: "qux" }] };
             expect(getTextResourceFromResourceBinding("baz")).toBe("qux");
         });
         it("returns resourceBinding if not found anywhere", () => {
-            globalThis.textResources = { resources: [] };
-            globalThis.defaultTextResources = { resources: [] };
+            testGlobals.textResources = { resources: [] };
+            testGlobals.defaultTextResources = { resources: [] };
             expect(getTextResourceFromResourceBinding("notfound")).toBe("notfound");
         });
         it("returns resourceBinding if neither textResources nor defaultTextResources are set", () => {
-            delete globalThis.textResources;
-            delete globalThis.defaultTextResources;
+            delete testGlobals.textResources;
+            delete testGlobals.defaultTextResources;
             expect(getTextResourceFromResourceBinding("myKey")).toBe("myKey");
         });
     });
 
     describe("getTextResourcesFromResourceBindings", () => {
         beforeEach(() => {
-            globalThis.textResources = {
+            testGlobals.textResources = {
                 resources: [
                     { id: "foo", value: "bar" },
                     { id: "baz", value: "qux" }
                 ]
             };
-            globalThis.defaultTextResources = { resources: [{ id: "default", value: "fallback" }] };
+            testGlobals.defaultTextResources = { resources: [{ id: "default", value: "fallback" }] };
         });
         it("maps resourceBindings to text resources", () => {
             const bindings = { a: "foo", b: "baz", c: "notfound" };

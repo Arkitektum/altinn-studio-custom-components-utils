@@ -8,7 +8,7 @@ export {
     getDefaultTextResources,
     getTextResourceFromResourceBinding,
     getTextResourcesFromResourceBindings
-} from "./scripts/textResourcesHelpers.js";
+} from "./scripts/textResourcesHelpers.ts";
 export { isValidHeaderSize, isValidTagName } from "./scripts/validators.ts";
 export { customElementTagNames } from "./constants/customElementTagNames.ts";
 export { validSizeValues } from "./constants/validSizeValues.ts";
