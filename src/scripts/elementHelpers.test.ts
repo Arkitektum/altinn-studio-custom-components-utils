@@ -132,7 +132,7 @@ describe("elementHelpers", () => {
             expect(container.style.maxWidth).toBe("50%");
             expect(container.style.flexGrow).toBe("0");
             expect(container.style.padding).toBe("0.75rem 0px");
-            expect(container.firstChild.firstChild).toBe(comp);
+            expect(container.firstChild?.firstChild).toBe(comp);
         });
         it("defaults to 100% if no grid", () => {
             const comp = document.createElement("span");

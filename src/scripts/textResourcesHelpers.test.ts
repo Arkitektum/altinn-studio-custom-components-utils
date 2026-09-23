@@ -11,8 +11,8 @@ import {
 const testGlobals = globalThis as { textResources?: unknown; defaultTextResources?: unknown };
 
 describe("textResourcesHelpers", () => {
-    let originalTextResources;
-    let originalDefaultTextResources;
+    let originalTextResources: unknown;
+    let originalDefaultTextResources: unknown;
 
     beforeEach(() => {
         originalTextResources = testGlobals.textResources;
