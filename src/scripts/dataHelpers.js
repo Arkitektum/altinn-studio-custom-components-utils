@@ -109,8 +109,8 @@ export function getDataForComponent(component, dataModels, dataType, selectedFil
         dataModels = [];
     }
     const data = {};
-    component?.dataModelBindings &&
-        Object.keys(component?.dataModelBindings).forEach((key) => {
+    if (component?.dataModelBindings) {
+        Object.keys(component.dataModelBindings).forEach((key) => {
             const dataModelBinding = component.dataModelBindings[key];
             if (typeof dataModelBinding === "string") {
                 let index = 0;
@@ -131,5 +131,6 @@ export function getDataForComponent(component, dataModels, dataType, selectedFil
                 data[key] = dataModelData === undefined ? dataModelBinding?.data : dataModelData;
             }
         });
+    }
     return data;
 }
