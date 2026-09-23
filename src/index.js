@@ -2,7 +2,7 @@ import CustomElementHtmlAttributes from "./classes/CustomElementHtmlAttributes.j
 export { CustomElementHtmlAttributes };
 
 export { getDataForComponent, hasValue, getValueFromDataKey } from "./scripts/dataHelpers.ts";
-export { addContainerElement, appendChildren, addStyle, calculateFlexWidth, createCustomElement, setAttributes } from "./scripts/elementHelpers.js";
+export { addContainerElement, appendChildren, addStyle, calculateFlexWidth, createCustomElement, setAttributes } from "./scripts/elementHelpers.ts";
 export {
     getTextResources,
     getDefaultTextResources,

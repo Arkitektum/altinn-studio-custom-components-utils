@@ -1,4 +1,5 @@
-import { addContainerElement, addStyle, appendChildren, calculateFlexWidth, createCustomElement, setAttributes } from "./elementHelpers.js";
+import { addContainerElement, addStyle, appendChildren, calculateFlexWidth, createCustomElement, setAttributes } from "./elementHelpers.ts";
+import { describe, expect, it } from "@jest/globals";
 
 describe("elementHelpers", () => {
     describe("appendChildren", () => {
