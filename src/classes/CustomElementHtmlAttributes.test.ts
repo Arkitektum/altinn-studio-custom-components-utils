@@ -1,25 +1,30 @@
-import CustomElementHtmlAttributes from "./CustomElementHtmlAttributes.js";
+import { beforeEach, describe, expect, it, jest } from "@jest/globals";
+import CustomElementHtmlAttributes from "./CustomElementHtmlAttributes.ts";
 import { hasValue } from "../scripts/dataHelpers.ts";
 import { isValidHeaderSize } from "../scripts/validators.ts";
 
 // Mock the imported helpers
 jest.mock("../scripts/validators.ts", () => ({
-    isValidHeaderSize: jest.fn((size) => ["h1", "h2", "h3", "h4", "h5", "h6"].includes((size || "").toLowerCase()))
+    isValidHeaderSize: jest.fn((size: unknown) => ["h1", "h2", "h3", "h4", "h5", "h6"].includes(((size || "") as string).toLowerCase()))
 }));
 jest.mock("../scripts/dataHelpers.ts", () => ({
-    hasValue: jest.fn((val) => val !== undefined && val !== null && val !== "")
+    hasValue: jest.fn((val: unknown) => val !== undefined && val !== null && val !== "")
 }));
+
+/** The two helpers are mocked above, so their mock controls are reached through jest.mocked rather than off the import. */
+const mockedHasValue = jest.mocked(hasValue);
+const mockedIsValidHeaderSize = jest.mocked(isValidHeaderSize);
 
 describe("CustomElementHtmlAttributes", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         // Default hasValue to real implementation for most tests
-        hasValue.mockImplementation((val) => val !== undefined && val !== null && val !== "");
+        mockedHasValue.mockImplementation((val) => val !== undefined && val !== null && val !== "");
     });
 
     describe("constructor", () => {
         it("should set all attributes if provided in props", () => {
-            isValidHeaderSize.mockReturnValue(true);
+            mockedIsValidHeaderSize.mockReturnValue(true);
             const props = {
                 isChildComponent: true,
                 formData: { foo: "bar" },
@@ -79,8 +84,8 @@ describe("CustomElementHtmlAttributes", () => {
         });
 
         it("should not set attributes if props are missing or falsy", () => {
-            isValidHeaderSize.mockReturnValue(false);
-            hasValue.mockReturnValue(false);
+            mockedIsValidHeaderSize.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             const attrs = new CustomElementHtmlAttributes({});
             expect(attrs).toEqual({});
         });
@@ -97,7 +102,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({ formData: { a: 1 } })).toBe('{"a":1}');
         });
         it("should return null if formData is not present", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getFormDataAttributeFromProps({})).toBeNull();
         });
         it("should not serialize a bare boolean, even though hasValue accepts one", () => {
@@ -135,11 +140,11 @@ describe("CustomElementHtmlAttributes", () => {
 
     describe("getSizeAttributeFromProps", () => {
         it("should return size as lowercase string if valid", () => {
-            isValidHeaderSize.mockReturnValue(true);
+            mockedIsValidHeaderSize.mockReturnValue(true);
             expect(new CustomElementHtmlAttributes({}).getSizeAttributeFromProps({ size: "H3" })).toBe("h3");
         });
         it("should return null if size is invalid", () => {
-            isValidHeaderSize.mockReturnValue(false);
+            mockedIsValidHeaderSize.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getSizeAttributeFromProps({ size: "foo" })).toBeNull();
         });
     });
@@ -191,7 +196,7 @@ describe("CustomElementHtmlAttributes", () => {
             );
         });
         it("should return null if styleOverride is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getStyleOverrideAttributeFromProps({})).toBeNull();
         });
     });
@@ -201,7 +206,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getGridAttributeFromProps({ grid: { xs: 12 } })).toBe('{"xs":12}');
         });
         it("should return null if grid is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getGridAttributeFromProps({})).toBeNull();
         });
     });
@@ -211,7 +216,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getTableColumnsAttributeFromProps({ tableColumns: [1, 2] })).toBe("[1,2]");
         });
         it("should return null if tableColumns is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getTableColumnsAttributeFromProps({})).toBeNull();
         });
     });
@@ -221,7 +226,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getItemKeyAttributeFromProps({ itemKey: "foo" })).toBe("foo");
         });
         it("should return null if itemKey is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getItemKeyAttributeFromProps({})).toBeNull();
         });
     });
@@ -231,7 +236,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getDataItemKeyAttributeFromProps({ dataItemKey: "foo" })).toBe("foo");
         });
         it("should return null if dataItemKey is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getDataItemKeyAttributeFromProps({})).toBeNull();
         });
     });
@@ -241,7 +246,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getDataTitleItemKeyAttributeFromProps({ dataTitleItemKey: "foo" })).toBe("foo");
         });
         it("should return null if dataTitleItemKey is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getDataTitleItemKeyAttributeFromProps({})).toBeNull();
         });
     });
@@ -251,7 +256,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getIdAttributeFromProps({ id: "foo" })).toBe("foo");
         });
         it("should return null if id is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getIdAttributeFromProps({})).toBeNull();
         });
     });
@@ -268,7 +273,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getFeedbackTypeAttributeFromProps({ feedbackType: "invalid" })).toBe("default");
         });
         it("should return null if feedbackType is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getFeedbackTypeAttributeFromProps({})).toBeNull();
         });
     });
@@ -289,7 +294,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getFormatAttributeFromProps({ format: "abc" })).toBe("abc");
         });
         it("should return null if format is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getFormatAttributeFromProps({})).toBeNull();
         });
     });
@@ -309,7 +314,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getResourceBindingsFromProps({ resourceBindings: { a: 1 } })).toBe('{"a":1}');
         });
         it("should return null if resourceBindings is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getResourceBindingsFromProps({})).toBeNull();
         });
     });
@@ -319,7 +324,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getResourceValuesFromProps({ resourceValues: { a: 1 } })).toBe('{"a":1}');
         });
         it("should return null if resourceValues is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getResourceValuesFromProps({})).toBeNull();
         });
     });
@@ -339,7 +344,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getTextAttributeFromProps({ text: "foo" })).toBe("foo");
         });
         it("should return null if text is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getTextAttributeFromProps({})).toBeNull();
         });
     });
@@ -349,7 +354,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getItemTermKeyAttributeFromProps({ itemTermKey: "term" })).toBe("term");
         });
         it("should return null if itemTermKey is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getItemTermKeyAttributeFromProps({})).toBeNull();
         });
     });
@@ -359,7 +364,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getItemDescriptionKeyAttributeFromProps({ itemDescriptionKey: "desc" })).toBe("desc");
         });
         it("should return null if itemDescriptionKey is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getItemDescriptionKeyAttributeFromProps({})).toBeNull();
         });
     });
@@ -369,7 +374,7 @@ describe("CustomElementHtmlAttributes", () => {
             expect(new CustomElementHtmlAttributes({}).getOrderAttributeFromProps({ order: { fieldKey: "asc" } })).toBe('{"fieldKey":"asc"}');
         });
         it("should return null if order is missing", () => {
-            hasValue.mockReturnValue(false);
+            mockedHasValue.mockReturnValue(false);
             expect(new CustomElementHtmlAttributes({}).getOrderAttributeFromProps({})).toBeNull();
         });
     });

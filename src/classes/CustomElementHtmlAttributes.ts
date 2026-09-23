@@ -2,11 +2,78 @@
 import { hasValue } from "../scripts/dataHelpers.ts";
 import { isValidHeaderSize } from "../scripts/validators.ts";
 
+
+/**
+ * Everything a component may hand to the attribute builder. Every one of them is optional, and each is read on its
+ * own terms: some become the string "true", some are serialized as JSON, some are passed through.
+ */
+export interface CustomElementProps {
+    isChildComponent?: unknown;
+    formData?: unknown;
+    tagName?: string;
+    size?: string | number;
+    hideTitle?: boolean | string;
+    hideIfEmpty?: boolean | string;
+    isEmpty?: unknown;
+    inline?: unknown;
+    styleOverride?: unknown;
+    grid?: unknown;
+    tableColumns?: unknown;
+    itemKey?: string;
+    itemTermKey?: string;
+    itemDescriptionKey?: string;
+    dataItemKey?: string;
+    dataTitleItemKey?: string;
+    id?: string;
+    feedbackType?: string;
+    hideOrgNr?: boolean | string;
+    format?: string | number;
+    showRowNumbers?: boolean | string;
+    resourceBindings?: unknown;
+    resourceValues?: unknown;
+    enableLinks?: unknown;
+    text?: string;
+    order?: unknown;
+}
+
 /**
  * Class representing CustomElementHtmlAttributes.
  * @class
  */
 export default class CustomElementHtmlAttributes {
+    /**
+     * The attributes, each set only when the props gave it a value.
+     *
+     * Declared rather than defined, so an instance carries only the attributes that were actually set. A plain field
+     * declaration would define every one of them as undefined on construction, which changes what `Object.keys` sees.
+     */
+    declare isChildComponent?: string;
+    declare formData?: string;
+    declare tagName?: string;
+    declare size?: string;
+    declare hideTitle?: string;
+    declare hideIfEmpty?: string;
+    declare isEmpty?: string;
+    declare inline?: string;
+    declare styleOverride?: string;
+    declare grid?: string;
+    declare tableColumns?: string;
+    declare itemKey?: string;
+    declare itemTermKey?: string;
+    declare itemDescriptionKey?: string;
+    declare dataItemKey?: string;
+    declare dataTitleItemKey?: string;
+    declare id?: string;
+    declare feedbackType?: string;
+    declare hideOrgNr?: string;
+    declare format?: string;
+    declare showRowNumbers?: string;
+    declare resourceBindings?: string;
+    declare resourceValues?: string;
+    declare enableLinks?: string;
+    declare text?: string;
+    declare order?: string;
+
     /**
      * Constructs a new instance of the CustomElementHtmlAttributes class.
      *
@@ -36,7 +103,7 @@ export default class CustomElementHtmlAttributes {
      * @param {string} [props.text] - The text content for the component.
      * @param {Object} [props.order] - The ordering configuration (e.g. sort key and direction) for the component.
      */
-    constructor(props) {
+    constructor(props?: CustomElementProps) {
         const isChildComponent = this.getIsChildComponentAttributeFromProps(props);
         const formData = this.getFormDataAttributeFromProps(props);
         const tagName = this.getTagNameAttributeFromProps(props);
@@ -157,7 +224,7 @@ export default class CustomElementHtmlAttributes {
      * @param {string|number|Object} [props.formData] - The form data to be processed.
      * @returns {string|null} A JSON string representation of the `formData` if it exists and is valid, otherwise `null`.
      */
-    getFormDataAttributeFromProps(props) {
+    getFormDataAttributeFromProps(props?: CustomElementProps): string | null {
         if (hasValue(props?.formData)) {
             if (typeof props?.formData === "string") {
                 const formData = props?.formData;
@@ -173,7 +240,7 @@ export default class CustomElementHtmlAttributes {
         return null;
     }
 
-    getIsChildComponentAttributeFromProps(props) {
+    getIsChildComponentAttributeFromProps(props?: CustomElementProps): string | null {
         return props?.isChildComponent ? "true" : null;
     }
 
@@ -184,8 +251,8 @@ export default class CustomElementHtmlAttributes {
      * @param {string} [props.tagName] - The tagName attribute to retrieve.
      * @returns {string|null} The `tagName` as a string if it exists, otherwise `null`.
      */
-    getTagNameAttributeFromProps(props) {
-        return props?.tagName ? props?.tagName.toString() : null;
+    getTagNameAttributeFromProps(props?: CustomElementProps): string | null {
+        return props?.tagName ? props.tagName.toString() : null;
     }
 
     /**
@@ -195,8 +262,8 @@ export default class CustomElementHtmlAttributes {
      * @param {string|number} [props.size] - The size value to validate and convert.
      * @returns {string|null} The size as a string if valid, otherwise null.
      */
-    getSizeAttributeFromProps(props) {
-        return isValidHeaderSize(props?.size) ? props?.size?.toString().toLowerCase() : null;
+    getSizeAttributeFromProps(props?: CustomElementProps): string | null {
+        return isValidHeaderSize(props?.size) ? (props?.size?.toString().toLowerCase() as string) : null;
     }
 
     /**
@@ -208,7 +275,7 @@ export default class CustomElementHtmlAttributes {
      * @param {boolean|string} [props.hideTitle] - The property indicating whether the title should be hidden.
      * @returns {string|null} - Returns "true" if the "hideTitle" property is strictly equal to "true" as a string; otherwise, null.
      */
-    getHideTitleAttributeFromProps(props) {
+    getHideTitleAttributeFromProps(props?: CustomElementProps): string | null {
         return props?.hideTitle?.toString() === "true" ? "true" : null;
     }
 
@@ -219,7 +286,7 @@ export default class CustomElementHtmlAttributes {
      * @param {boolean|string} [props.hideIfEmpty] - A property that determines if the element should be hidden when empty.
      * @returns {string|null} - Returns the string "true" if the "hideIfEmpty" property is strictly equal to the string "true", otherwise returns `null`.
      */
-    getHideIfEmptyAttributeFromProps(props) {
+    getHideIfEmptyAttributeFromProps(props?: CustomElementProps): string | null {
         return props?.hideIfEmpty?.toString() === "true" ? "true" : null;
     }
 
@@ -231,7 +298,7 @@ export default class CustomElementHtmlAttributes {
      * @param {*} [props.isEmpty] - The value to check for emptiness.
      * @returns {string|null} "true" if `props.isEmpty` is "true", otherwise `null`.
      */
-    getIsEmptyAttributeFromProps(props) {
+    getIsEmptyAttributeFromProps(props?: CustomElementProps): string | null {
         return props?.isEmpty?.toString() === "true" ? "true" : null;
     }
 
@@ -244,7 +311,7 @@ export default class CustomElementHtmlAttributes {
      * @param {any} props.inline - The "inline" property to evaluate.
      * @returns {string|null} - Returns "true" if the "inline" property is strictly equal to "true" as a string; otherwise, null.
      */
-    getInlineAttributeFromProps(props) {
+    getInlineAttributeFromProps(props?: CustomElementProps): string | null {
         return props?.inline?.toString() === "true" ? "true" : null;
     }
 
@@ -255,7 +322,7 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} [props.styleOverride] - An object representing style overrides.
      * @returns {string|null} A JSON string representation of the styleOverride object if it exists and has a value, otherwise null.
      */
-    getStyleOverrideAttributeFromProps(props) {
+    getStyleOverrideAttributeFromProps(props?: CustomElementProps): string | null {
         return hasValue(props?.styleOverride) ? JSON.stringify(props?.styleOverride) : null;
     }
 
@@ -268,7 +335,7 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} [props.grid] - The grid attribute to be processed.
      * @returns {string|null} The JSON stringified grid attribute if it exists, otherwise `null`.
      */
-    getGridAttributeFromProps(props) {
+    getGridAttributeFromProps(props?: CustomElementProps): string | null {
         return hasValue(props?.grid) ? JSON.stringify(props?.grid) : null;
     }
 
@@ -281,7 +348,7 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} props - The props object containing the `tableColumns` property.
      * @returns {string|null} The JSON stringified `tableColumns` if it exists and has a value, otherwise `null`.
      */
-    getTableColumnsAttributeFromProps(props) {
+    getTableColumnsAttributeFromProps(props?: CustomElementProps): string | null {
         return hasValue(props?.tableColumns) ? JSON.stringify(props?.tableColumns) : null;
     }
 
@@ -292,8 +359,8 @@ export default class CustomElementHtmlAttributes {
      * @param {*} props.itemKey - The key to be checked and returned if valid.
      * @returns {*} The value of `itemKey` if it exists and is valid; otherwise, returns `null`.
      */
-    getItemKeyAttributeFromProps(props) {
-        return hasValue(props?.itemKey) ? props?.itemKey : null;
+    getItemKeyAttributeFromProps(props?: CustomElementProps): string | null {
+        return hasValue(props?.itemKey) ? (props?.itemKey as string) : null;
     }
 
     /**
@@ -303,8 +370,8 @@ export default class CustomElementHtmlAttributes {
      * @param {*} props.itemTermKey - The item term key to check and return.
      * @returns {string|null} The value of `itemTermKey` if it exists and has a value; otherwise, returns null.
      */
-    getItemTermKeyAttributeFromProps(props) {
-        return hasValue(props?.itemTermKey) ? props?.itemTermKey : null;
+    getItemTermKeyAttributeFromProps(props?: CustomElementProps): string | null {
+        return hasValue(props?.itemTermKey) ? (props?.itemTermKey as string) : null;
     }
 
     /**
@@ -313,8 +380,8 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} props - The properties object that may contain the 'itemDescriptionKey' attribute.
      * @returns {string|null} The value of 'itemDescriptionKey' if it exists and is valid; otherwise, returns null.
      */
-    getItemDescriptionKeyAttributeFromProps(props) {
-        return hasValue(props?.itemDescriptionKey) ? props?.itemDescriptionKey : null;
+    getItemDescriptionKeyAttributeFromProps(props?: CustomElementProps): string | null {
+        return hasValue(props?.itemDescriptionKey) ? (props?.itemDescriptionKey as string) : null;
     }
 
     /**
@@ -324,8 +391,8 @@ export default class CustomElementHtmlAttributes {
      * @param {*} props.dataItemKey - The key to be retrieved if it has a value.
      * @returns {*} The value of `dataItemKey` if it exists and is valid; otherwise, returns null.
      */
-    getDataItemKeyAttributeFromProps(props) {
-        return hasValue(props?.dataItemKey) ? props?.dataItemKey : null;
+    getDataItemKeyAttributeFromProps(props?: CustomElementProps): string | null {
+        return hasValue(props?.dataItemKey) ? (props?.dataItemKey as string) : null;
     }
 
     /**
@@ -334,8 +401,8 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} props - The properties object to extract the attribute from.
      * @returns {string|null} The value of 'dataTitleItemKey' if it exists and is valid; otherwise, returns null.
      */
-    getDataTitleItemKeyAttributeFromProps(props) {
-        return hasValue(props?.dataTitleItemKey) ? props?.dataTitleItemKey : null;
+    getDataTitleItemKeyAttributeFromProps(props?: CustomElementProps): string | null {
+        return hasValue(props?.dataTitleItemKey) ? (props?.dataTitleItemKey as string) : null;
     }
 
     /**
@@ -345,8 +412,8 @@ export default class CustomElementHtmlAttributes {
      * @param {string} [props.id] - The `id` attribute to be retrieved.
      * @returns {string|null} The `id` attribute if it has a valid value, otherwise `null`.
      */
-    getIdAttributeFromProps(props) {
-        return hasValue(props?.id) ? props?.id : null;
+    getIdAttributeFromProps(props?: CustomElementProps): string | null {
+        return hasValue(props?.id) ? (props?.id as string) : null;
     }
 
     /**
@@ -356,10 +423,10 @@ export default class CustomElementHtmlAttributes {
      * @param {string} [props.feedbackType] - The feedback type to validate.
      * @returns {string|null} - Returns the feedback type if it is valid, "default" if invalid, or null if feedbackType is not provided.
      */
-    getFeedbackTypeAttributeFromProps(props) {
+    getFeedbackTypeAttributeFromProps(props?: CustomElementProps): string | null {
         const validFeedbackTypes = ["error", "warning", "success", "info", "default"];
         if (hasValue(props?.feedbackType)) {
-            return validFeedbackTypes.includes(props?.feedbackType) ? props?.feedbackType : "default";
+            return validFeedbackTypes.includes(props?.feedbackType as string) ? (props?.feedbackType as string) : "default";
         } else {
             return null;
         }
@@ -372,7 +439,7 @@ export default class CustomElementHtmlAttributes {
      * @param {boolean|string} [props.hideOrgNr] - The property indicating whether to hide the organization number.
      * @returns {string|null} Returns the string "true" if the "hideOrgNr" property is strictly equal to "true", otherwise null.
      */
-    getHideOrgNrAttributeFromProps(props) {
+    getHideOrgNrAttributeFromProps(props?: CustomElementProps): string | null {
         return props?.hideOrgNr?.toString() === "true" ? "true" : null;
     }
 
@@ -383,8 +450,8 @@ export default class CustomElementHtmlAttributes {
      * @param {string|number|boolean|null|undefined} [props.format] - The format value to be retrieved.
      * @returns {string|null} - The string representation of the 'format' attribute if it exists and has a value; otherwise, null.
      */
-    getFormatAttributeFromProps(props) {
-        return hasValue(props?.format) ? props?.format?.toString() : null;
+    getFormatAttributeFromProps(props?: CustomElementProps): string | null {
+        return hasValue(props?.format) ? (props?.format?.toString() as string) : null;
     }
 
     /**
@@ -396,7 +463,7 @@ export default class CustomElementHtmlAttributes {
      * @param {boolean|string} [props.showRowNumbers] - The value of the "showRowNumbers" attribute.
      * @returns {string|null} - Returns "true" if the "showRowNumbers" attribute is strictly equal to "true" as a string, otherwise null.
      */
-    getShowRowNumbersAttributeFromProps(props) {
+    getShowRowNumbersAttributeFromProps(props?: CustomElementProps): string | null {
         return props?.showRowNumbers?.toString() === "true" ? "true" : null;
     }
 
@@ -408,7 +475,7 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} props - The properties object that may contain text resource bindings.
      * @returns {string|null} The JSON stringified text resource bindings if present, otherwise null.
      */
-    getResourceBindingsFromProps(props) {
+    getResourceBindingsFromProps(props?: CustomElementProps): string | null {
         return hasValue(props?.resourceBindings) ? JSON.stringify(props?.resourceBindings) : null;
     }
 
@@ -419,7 +486,7 @@ export default class CustomElementHtmlAttributes {
      * @param {*} [props.resourceValues] - The resource values to retrieve.
      * @returns {string|null} The JSON stringified resource values if present and valid; otherwise, returns null.
      */
-    getResourceValuesFromProps(props) {
+    getResourceValuesFromProps(props?: CustomElementProps): string | null {
         if (hasValue(props?.resourceValues)) {
             return JSON.stringify(props?.resourceValues);
         } else {
@@ -434,7 +501,7 @@ export default class CustomElementHtmlAttributes {
      * @param {*} [props.enableLinks] - The value indicating whether links should be enabled.
      * @returns {string|null} Returns "true" if 'enableLinks' is strictly "true", otherwise null.
      */
-    getEnableLinksFromProps(props) {
+    getEnableLinksFromProps(props?: CustomElementProps): string | null {
         return props?.enableLinks?.toString() === "true" ? "true" : null;
     }
 
@@ -444,8 +511,8 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} props - The properties object that may contain a 'text' attribute.
      * @returns {*} The value of 'props.text' if it exists and passes the hasValue check; otherwise, returns null.
      */
-    getTextAttributeFromProps(props) {
-        return hasValue(props?.text) ? props?.text : null;
+    getTextAttributeFromProps(props?: CustomElementProps): string | null {
+        return hasValue(props?.text) ? (props?.text as string) : null;
     }
 
     /**
@@ -454,7 +521,7 @@ export default class CustomElementHtmlAttributes {
      * @param {Object} props - The properties object that may contain an 'order' attribute.
      * @returns {string|null} The JSON-stringified value of 'order' if it exists and passes the hasValue check; otherwise, null.
      */
-    getOrderAttributeFromProps(props) {
+    getOrderAttributeFromProps(props?: CustomElementProps): string | null {
         return hasValue(props?.order) ? JSON.stringify(props?.order) : null;
     }
 }
