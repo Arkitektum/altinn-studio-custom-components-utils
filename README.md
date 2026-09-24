@@ -3,7 +3,7 @@
 ![CI](https://github.com/Arkitektum/altinn-studio-custom-components-utils/actions/workflows/ci.yml/badge.svg) ![npm version](https://img.shields.io/npm/v/@arkitektum/altinn-studio-custom-components-utils.svg)
 
 Shared functions, classes, and constants used across the **Altinn Studio custom components** ecosystem.
-This is the common foundation that the [components](https://github.com/Arkitektum/altinn-studio-custom-components), the [documentation gallery](https://github.com/Arkitektum/altinn-studio-custom-components-docs), and the [statistics API](https://github.com/Arkitektum/altinn-studio-custom-components-api) all build on.
+This is the common foundation that the [components](https://github.com/Arkitektum/altinn-studio-custom-components) and the [documentation gallery](https://github.com/Arkitektum/altinn-studio-custom-components-docs) build on. Those two are the only consumers; nothing else in the ecosystem imports it.
 
 It is published in both **ESM** and **CommonJS** builds, and it owns the **allow-list of valid custom-element tag names** that guards element rendering across the ecosystem.
 

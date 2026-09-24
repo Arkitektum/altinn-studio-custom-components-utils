@@ -35,11 +35,11 @@ Please include as much of the following as you can:
 
 ## Scope and security model
 
-This package is a shared library consumed by the custom components, the docs gallery, and the statistics API.
+This package is a shared library consumed by the custom components and the docs gallery.
 A few properties are relevant when assessing security:
 
 - **Tag-name allow-list.**
-  `createCustomElement` rejects any tag name not present in the `customElementTagNames` allow-list (`src/constants/customElementTagNames.js`).
+  `createCustomElement` rejects any tag name not present in the `customElementTagNames` allow-list (`src/constants/customElementTagNames.ts`).
   This is an intentional guard against arbitrary element injection across every consumer; changes to it — and to `isValidTagName` / `createCustomElement` — deserve extra scrutiny.
 - **Untrusted input.**
   The helpers operate on form data and text resources supplied by the host application.

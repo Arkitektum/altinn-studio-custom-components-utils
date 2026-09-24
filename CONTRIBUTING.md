@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing to `@arkitektum/altinn-studio-custom-components-utils` — the shared library used by the custom components, the docs gallery, and the statistics API.
+Thanks for contributing to `@arkitektum/altinn-studio-custom-components-utils` — the shared library used by the custom components and the docs gallery.
 
 For an overview of the public API and how the package is built, read [ARCHITECTURE.md](./ARCHITECTURE.md) first.
 
@@ -64,10 +64,10 @@ Before opening a pull request, make sure `yarn test` and `yarn build` pass — C
    - `src/scripts/` for helper functions,
    - `src/constants/` for shared constants.
 
-2. **Export it** from `src/index.js`.
+2. **Export it** from `src/index.ts`, together with any type it introduces.
    The single entry point is the package's public API — anything not re-exported there is internal.
 
-3. **Add tests** as a colocated `*.test.js` next to the module, and cover the behavior with Jest (jsdom).
+3. **Add tests** as a colocated `*.test.ts` next to the module, and cover the behavior with Jest (jsdom).
 
 4. **Mind backward compatibility.**
    Many packages depend on this one.
@@ -75,17 +75,17 @@ Before opening a pull request, make sure `yarn test` and `yarn build` pass — C
 
 ### Adding a custom-element tag name
 
-The allow-list in `src/constants/customElementTagNames.js` is **security-critical**: `createCustomElement` throws for any tag name not in it.
+The allow-list in `src/constants/customElementTagNames.ts` is **security-critical**: `createCustomElement` throws for any tag name not in it.
 When a new component is added anywhere in the ecosystem, add its tag name here, then release a new version of this package and bump it in the consumer.
 
 ---
 
 ## Coding conventions
 
-- **ES modules** throughout; the public surface is `src/index.js`.
+- **ES modules** throughout, written in TypeScript; the public surface is `src/index.ts`. Relative imports name the `.ts` file they mean, which is what lets the sources run unbuilt.
 - **JSDoc** on classes and exported functions.
 - **Formatting & linting** via Prettier (`.prettierrc`) and ESLint (`eslint.config.mjs`).
-- **Tests** colocated as `*.test.js` and run with Jest.
+- **Tests** colocated as `*.test.ts` and run with Jest.
 
 ---
 
@@ -103,6 +103,6 @@ When a new component is added anywhere in the ecosystem, add its tag name here, 
 - Releases are **triggered by creating a GitHub Release**.
   The publish workflows then install, test, build, and publish to **npm** (with provenance) and to **GitHub Packages**.
 - Bump the version in `package.json` as part of the change that warrants a release, following semantic versioning.
-- After a release, bump the dependency in the consuming packages (`altinn-studio-custom-components`, the docs site, the API) to pick up the change.
+- After a release, bump the dependency in the two consuming repositories, `altinn-studio-custom-components` and `altinn-studio-custom-components-docs`, to pick up the change. The docs site pins both this package and the components, so a change that reaches the gallery usually needs both bumped.
 
 > Only maintainers can publish releases.
