@@ -43,10 +43,13 @@ export function getDefaultTextResources(): unknown {
  * The app's own resources are searched first, then the defaults that ship with the components. A binding nothing
  * answers to comes back as itself, which is what puts the missing id on screen instead of an empty space.
  *
- * @param resourceBinding - The id of the text resource to look up.
- * @returns The text, or the binding itself when neither set has it.
+ * A component reads its bindings off props that may not carry the one it is after, so nothing is a valid argument
+ * and comes straight back out. Callers are spared a guard they would otherwise need at every call site.
+ *
+ * @param resourceBinding - The id of the text resource to look up, if there is one.
+ * @returns The text, the binding itself when neither set has it, or nothing when none was given.
  */
-export function getTextResourceFromResourceBinding(resourceBinding: string): string {
+export function getTextResourceFromResourceBinding(resourceBinding?: string): string | undefined {
     const textResources = getTextResources() as TextResourceCollection | undefined;
     const defaultTextResources = getDefaultTextResources() as TextResourceCollection | undefined;
     return (
