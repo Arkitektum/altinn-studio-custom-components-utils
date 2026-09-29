@@ -41,6 +41,7 @@ const customElementTagNames: string[] = [
     "custom-group-avloep",
     "custom-group-dispensasjon-oversikt",
     "custom-group-ettersending",
+    "custom-group-fakturamottaker",
     "custom-group-kontroll-ansvarsomraade",
     "custom-group-kontroll-erklaeringer",
     "custom-group-loefteinnretninger",
