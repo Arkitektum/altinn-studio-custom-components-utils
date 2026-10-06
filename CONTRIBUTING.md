@@ -11,11 +11,11 @@ For an overview of the public API and how the package is built, read [ARCHITECTU
 - **Node.js 24**
 - **Yarn 4**, managed via [Corepack](https://nodejs.org/api/corepack.html). Enable it once:
 
-  ```bash
-  corepack enable
-  ```
+    ```bash
+    corepack enable
+    ```
 
-  The correct Yarn version is then activated automatically from the `packageManager` field in `package.json`.
+    The correct Yarn version is then activated automatically from the `packageManager` field in `package.json`.
 
 ---
 
@@ -23,34 +23,34 @@ For an overview of the public API and how the package is built, read [ARCHITECTU
 
 1. **Clone and install**
 
-   ```bash
-   git clone https://github.com/Arkitektum/altinn-studio-custom-components-utils.git
-   cd altinn-studio-custom-components-utils
-   yarn install
-   ```
+    ```bash
+    git clone https://github.com/Arkitektum/altinn-studio-custom-components-utils.git
+    cd altinn-studio-custom-components-utils
+    yarn install
+    ```
 
 2. **Run the tests**
 
-   ```bash
-   yarn test
-   ```
+    ```bash
+    yarn test
+    ```
 
 3. **Build**
 
-   ```bash
-   yarn build
-   ```
+    ```bash
+    yarn build
+    ```
 
-   This emits the ESM (`dist/index.js`) and CJS (`dist/index.cjs`) bundles via tsup.
+    This emits the ESM (`dist/index.js`) and CJS (`dist/index.cjs`) bundles via tsup.
 
 ---
 
 ## Everyday commands
 
-| Command | What it does |
-| ------- | ------------ |
-| `yarn test` | Run the Jest unit tests (with coverage). |
-| `yarn build` | Build the publishable ESM + CJS bundles into `dist/`. |
+| Command        | What it does                                                 |
+| -------------- | ------------------------------------------------------------ |
+| `yarn test`    | Run the Jest unit tests (with coverage).                     |
+| `yarn build`   | Build the publishable ESM + CJS bundles into `dist/`.        |
 | `npx eslint .` | Lint the source (ESLint flat config in `eslint.config.mjs`). |
 
 Before opening a pull request, make sure `yarn test` and `yarn build` pass — CI runs the same checks.
@@ -60,9 +60,9 @@ Before opening a pull request, make sure `yarn test` and `yarn build` pass — C
 ## Adding or changing functionality
 
 1. **Add the code** under the right folder:
-   - `src/classes/` for classes,
-   - `src/scripts/` for helper functions,
-   - `src/constants/` for shared constants.
+    - `src/classes/` for classes,
+    - `src/scripts/` for helper functions,
+    - `src/constants/` for shared constants.
 
 2. **Export it** from `src/index.ts`, together with any type it introduces.
    The single entry point is the package's public API — anything not re-exported there is internal.

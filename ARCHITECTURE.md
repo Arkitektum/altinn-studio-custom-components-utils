@@ -38,16 +38,16 @@ Because every consumer renders elements through `createCustomElement`, this pack
 
 The package exposes a single entry point (`src/index.ts`), and publishes types alongside the values:
 
-| Export | Kind | Purpose |
-| ------ | ---- | ------- |
-| `CustomElementHtmlAttributes` | class | Builds the attribute set for a custom element from component props. |
-| `createCustomElement` | function | Creates a custom element — **throws for any tag name not in the allow-list**. |
-| `addContainerElement`, `appendChildren`, `addStyle`, `calculateFlexWidth`, `setAttributes` | functions | DOM/element helpers. |
-| `getDataForComponent`, `hasValue`, `getValueFromDataKey` | functions | Data-model helpers. |
-| `getTextResources`, `getDefaultTextResources`, `getTextResourceFromResourceBinding`, `getTextResourcesFromResourceBindings` | functions | Text-resource (i18n) helpers. |
-| `isValidHeaderSize`, `isValidTagName` | functions | Validators. |
-| `customElementTagNames` | constant | The allow-list of valid custom-element tag names. |
-| `validSizeValues` | constant | Allowed size values. |
+| Export                                                                                                                      | Kind      | Purpose                                                                       |
+| --------------------------------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
+| `CustomElementHtmlAttributes`                                                                                               | class     | Builds the attribute set for a custom element from component props.           |
+| `createCustomElement`                                                                                                       | function  | Creates a custom element — **throws for any tag name not in the allow-list**. |
+| `addContainerElement`, `appendChildren`, `addStyle`, `calculateFlexWidth`, `setAttributes`                                  | functions | DOM/element helpers.                                                          |
+| `getDataForComponent`, `hasValue`, `getValueFromDataKey`                                                                    | functions | Data-model helpers.                                                           |
+| `getTextResources`, `getDefaultTextResources`, `getTextResourceFromResourceBinding`, `getTextResourcesFromResourceBindings` | functions | Text-resource (i18n) helpers.                                                 |
+| `isValidHeaderSize`, `isValidTagName`                                                                                       | functions | Validators.                                                                   |
+| `customElementTagNames`                                                                                                     | constant  | The allow-list of valid custom-element tag names.                             |
+| `validSizeValues`                                                                                                           | constant  | Allowed size values.                                                          |
 
 ---
 

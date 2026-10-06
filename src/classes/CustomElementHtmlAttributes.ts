@@ -2,7 +2,6 @@
 import { hasValue } from "../scripts/dataHelpers.ts";
 import { isValidHeaderSize } from "../scripts/validators.ts";
 
-
 /**
  * Everything a component may hand to the attribute builder. Every one of them is optional, and each is read on its
  * own terms: some become the string "true", some are serialized as JSON, some are passed through.
