@@ -88,19 +88,19 @@ export function addStyle(element: unknown, style: unknown): void {
  * The flex width percentage for a grid configuration.
  *
  * Each breakpoint falls back to the one below it, so a grid naming only `xs` is that width all the way up. The
- * narrowest of them wins, which is what keeps a component from overflowing its row at any size.
+ * narrowest of them wins, which is what keeps a component from overflowing its row at any size. A value that is not a
+ * number from 1 to 12 is treated as missing.
  *
  * @param grid - The grid configuration, by breakpoint.
  * @returns The width percentage, or 100 when there is no grid to go on.
  */
 export function calculateFlexWidth(grid?: Grid | null): number {
     if (grid) {
+        // Only a number of twelfths a grid can hold counts. Number() reads "" and [] as 0, which would collapse the column, and true as 1,
+        // so only numbers and strings are read, and the range rejects the zero a blank string becomes.
         const normalizeGridValue = (value: unknown, fallback: number): number => {
-            if (value === null || value === undefined) {
-                return fallback;
-            }
-            const numeric = Number(value);
-            return Number.isNaN(numeric) ? fallback : numeric;
+            const numeric = typeof value === "number" || typeof value === "string" ? Number(value) : Number.NaN;
+            return Number.isFinite(numeric) && numeric >= 1 && numeric <= 12 ? numeric : fallback;
         };
 
         const xs = normalizeGridValue(grid.xs, 12);

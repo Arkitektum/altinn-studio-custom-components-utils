@@ -120,6 +120,25 @@ describe("elementHelpers", () => {
             expect(calculateFlexWidth({ xs: "invalid" })).toBe(100);
             expect(calculateFlexWidth({ xs: 6, sm: "bad" })).toBe(50);
         });
+
+        it("treats an empty value as missing rather than as zero, which would collapse the column", () => {
+            expect(calculateFlexWidth({ xs: "" })).toBe(100);
+            expect(calculateFlexWidth({ xs: "  " })).toBe(100);
+            expect(calculateFlexWidth({ xs: 6, md: "" })).toBe(50);
+            expect(calculateFlexWidth({ xs: [] })).toBe(100);
+        });
+
+        it("treats a value outside 1 to 12 as missing", () => {
+            expect(calculateFlexWidth({ xs: 0 })).toBe(100);
+            expect(calculateFlexWidth({ xs: 24 })).toBe(100);
+            expect(calculateFlexWidth({ xs: 6, sm: -1 })).toBe(50);
+            expect(calculateFlexWidth({ xs: true })).toBe(100);
+        });
+
+        it("still reads a number written as a string", () => {
+            expect(calculateFlexWidth({ xs: "6" })).toBe(50);
+            expect(calculateFlexWidth({ xs: 12, md: "4" })).toBeCloseTo(33.333, 1);
+        });
     });
 
     describe("addContainerElement", () => {
