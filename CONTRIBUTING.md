@@ -47,13 +47,15 @@ For an overview of the public API and how the package is built, read [ARCHITECTU
 
 ## Everyday commands
 
-| Command        | What it does                                                 |
-| -------------- | ------------------------------------------------------------ |
-| `yarn test`    | Run the Jest unit tests (with coverage).                     |
-| `yarn build`   | Build the publishable ESM + CJS bundles into `dist/`.        |
-| `npx eslint .` | Lint the source (ESLint flat config in `eslint.config.mjs`). |
+| Command             | What it does                                                 |
+| ------------------- | ------------------------------------------------------------ |
+| `yarn test`         | Run the Jest unit tests (with coverage).                     |
+| `yarn build`        | Build the publishable ESM + CJS bundles into `dist/`.        |
+| `yarn lint`         | Lint the source (ESLint flat config in `eslint.config.mjs`). |
+| `yarn format:check` | Check formatting with Prettier.                              |
+| `yarn typecheck`    | Type-check with `tsc --noEmit`.                              |
 
-Before opening a pull request, make sure `yarn test` and `yarn build` pass — CI runs the same checks.
+Before opening a pull request, make sure `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test` and `yarn build` all pass. CI runs the same checks.
 
 ---
 
@@ -93,7 +95,7 @@ When a new component is added anywhere in the ecosystem, add its tag name here, 
 
 1. Branch off `main`.
 2. Keep changes focused; update or add tests.
-3. Ensure `yarn test` and `yarn build` pass locally.
+3. Ensure `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test` and `yarn build` pass locally.
 4. Open a PR against `main`. CI (`ci.yml` and the ESLint scan) must be green before merge.
 
 ---

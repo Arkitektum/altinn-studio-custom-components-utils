@@ -71,7 +71,7 @@ dist/                                 # Build output (published): index.js (ESM)
                                       # and the declarations consumers type against
 ```
 
-The source is TypeScript as of 2.0.0, compiled by tsup. Relative imports name the `.ts` file they mean, so the sources run under `node --test` with nothing built. Tests are colocated as `*.test.ts` next to each module.
+The source is TypeScript as of 2.0.0, compiled by tsup. Relative imports name the `.ts` file they mean, so the sources import in plain Node with nothing built, Node stripping the types itself. The tests are Jest's (they use `jest.mock`), so they run through `yarn test`. Tests are colocated as `*.test.ts` next to each module.
 
 ---
 
@@ -93,7 +93,7 @@ This is intentional: consumers only render through this function, so the allow-l
 
 **CI** (`.github/workflows/`):
 
-- `ci.yml` — install, `yarn test`, `yarn build` on push/PR to `main`.
+- `ci.yml` — install, `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test`, `yarn build` on push/PR to `main`.
 - `eslint.yml` — ESLint scan, uploads SARIF to the GitHub Security tab.
 - `build-and-publish-to-npm.yml` / `build-and-publish-to-github.yml` — on GitHub **release created**: install, test, build, then publish to **npm** (with `--provenance --access public`) and to **GitHub Packages**.
 
