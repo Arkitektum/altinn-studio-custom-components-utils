@@ -84,3 +84,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow and [ARCHITECTURE
 - [Security policy](./SECURITY.md)
 - [Custom components](https://github.com/Arkitektum/altinn-studio-custom-components)
 - [Component documentation & gallery](https://arkitektum.github.io/altinn-studio-custom-components-docs/)
+- [Licence](./LICENSE) (MIT)

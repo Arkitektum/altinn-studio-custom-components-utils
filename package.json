@@ -1,6 +1,7 @@
 {
     "name": "@arkitektum/altinn-studio-custom-components-utils",
     "version": "2.0.3",
+    "license": "MIT",
     "type": "module",
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
