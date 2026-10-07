@@ -1,5 +1,10 @@
-/** Every custom element this ecosystem defines. The allow-list that createCustomElement and isValidTagName check against. */
-const customElementTagNames: string[] = [
+/**
+ * Every custom element this ecosystem defines. The allow-list that createCustomElement and isValidTagName check against.
+ *
+ * Frozen, since it is the one guard on which tags may be created: a consumer that could push to it could let any tag
+ * through.
+ */
+const customElementTagNames: readonly string[] = Object.freeze([
     "custom-description-list",
     "custom-description-list-data",
     "custom-divider",
@@ -82,6 +87,6 @@ const customElementTagNames: string[] = [
     "custom-dispensasjonsvarsel",
     "custom-gjennomfoeringsplan",
     "custom-gjenpart-nabovarsel"
-];
+]);
 
 export { customElementTagNames };
