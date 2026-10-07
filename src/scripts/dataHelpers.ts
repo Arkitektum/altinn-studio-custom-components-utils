@@ -158,8 +158,11 @@ export function getDataForComponent(
             const dataModelBinding = bindings[key];
             if (typeof dataModelBinding === "string") {
                 const index = dataType ? models.findIndex((dataModel) => dataModel?.dataType === dataType) : 0;
-                data[key] = getValueFromDataKey(dataOfModel(models, index, dataType, selectedFileNames), dataModelBinding);
-            } else if (typeof dataModelBinding === "object") {
+                // With no data type given, the first model is read, so a file selected for its data type applies.
+                const modelDataType = dataType ?? models[index]?.dataType;
+                data[key] = getValueFromDataKey(dataOfModel(models, index, modelDataType, selectedFileNames), dataModelBinding);
+            } else if (dataModelBinding && typeof dataModelBinding === "object") {
+                // A null binding, which JSON can carry whatever the type says, reads as nothing rather than as a whole model.
                 const index = models.findIndex((dataModel) => dataModel?.dataType === dataModelBinding?.dataType);
                 const dataModelData = getValueFromDataKey(
                     dataOfModel(models, index, dataModelBinding?.dataType, selectedFileNames),

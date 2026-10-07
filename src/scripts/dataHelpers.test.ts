@@ -94,6 +94,15 @@ describe("dataHelpers", () => {
             const selectedFileNames = { type1: "fileB" };
             expect(getDataForComponent(component, dataModelsWithFiles, "type1", selectedFileNames)).toEqual({ a: 20 });
         });
+        it("uses the first model's selected file when no data type is given", () => {
+            const dataModelsWithFiles = [{ dataType: "type1", data: { fileA: { foo: 10 }, fileB: { foo: 20 } } }];
+            const component = { dataModelBindings: { a: "foo" } };
+            expect(getDataForComponent(component, dataModelsWithFiles, undefined, { type1: "fileB" })).toEqual({ a: 20 });
+        });
+        it("reads a null binding as nothing, not as the whole model", () => {
+            const component = { dataModelBindings: { a: null } } as unknown as Parameters<typeof getDataForComponent>[0];
+            expect(getDataForComponent(component, [{ data: { secret: 1 } }])).toEqual({});
+        });
         it("returns empty object if no dataModelBindings", () => {
             expect(getDataForComponent({}, dataModels)).toEqual({});
         });
