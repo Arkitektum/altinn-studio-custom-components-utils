@@ -40,8 +40,8 @@
     "homepage": "https://github.com/Arkitektum/altinn-studio-custom-components-utils#readme",
     "devDependencies": {
         "@babel/core": "^8.0.7",
-        "@babel/preset-env": "^8.0.6",
-        "@babel/preset-typescript": "^8.0.1",
+        "@babel/preset-env": "^8.0.7",
+        "@babel/preset-typescript": "^8.0.7",
         "@eslint/js": "^10.0.1",
         "@jest/globals": "^30.5.2",
         "@microsoft/eslint-formatter-sarif": "^3.1.0",
@@ -49,10 +49,10 @@
         "globals": "^17.13.0",
         "jest": "^30.5.2",
         "jest-environment-jsdom": "^30.5.2",
-        "prettier": "^3.9.9",
+        "prettier": "^3.9.10",
         "tsup": "^8.5.1",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.71.1"
+        "typescript-eslint": "^8.71.2"
     },
     "engines": {
         "node": ">=24"
