@@ -8,8 +8,7 @@
         "strict": true,
         "skipLibCheck": true,
         // Relative imports name the .ts file they mean, so jest resolves them without a moduleNameMapper and the sources can be run directly. tsup bundles for the published build.
-        "allowImportingTsExtensions": true,
-        "ignoreDeprecations": "6.0"
+        "allowImportingTsExtensions": true
     },
     "include": ["src"]
 }
