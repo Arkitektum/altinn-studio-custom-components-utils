@@ -4,9 +4,9 @@ on:
     release:
         types: [created]
 
+# id-token for npm trusted publishing (OIDC). Nothing here writes to GitHub Packages, so no packages scope.
 permissions:
     contents: read
-    packages: write
     id-token: write
 
 jobs:
