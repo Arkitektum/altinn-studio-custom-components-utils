@@ -15,14 +15,14 @@ jobs:
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v6
+              uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
             # No registry-url here on purpose: it makes setup-node write an
             # .npmrc with //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN},
             # which makes npm think the registry already has auth configured and
             # skip the OIDC exchange that trusted publishing relies on.
             - name: Setup Node.js
-              uses: actions/setup-node@v6
+              uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
               with:
                   node-version: "24"
 
