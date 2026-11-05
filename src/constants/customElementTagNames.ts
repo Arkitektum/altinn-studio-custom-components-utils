@@ -85,6 +85,7 @@ const customElementTagNames: readonly string[] = Object.freeze([
     "custom-table-plan",
     "custom-dispensasjon",
     "custom-dispensasjonsvarsel",
+    "custom-endring-av-rolle-i-byggesaken",
     "custom-gjennomfoeringsplan",
     "custom-gjenpart-nabovarsel"
 ]);
