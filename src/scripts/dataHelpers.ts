@@ -82,13 +82,7 @@ export function hasValue(obj: unknown): boolean {
     if (typeof obj !== "object") {
         return false;
     }
-    const record = obj as Record<string, unknown>;
-    for (const key in record) {
-        if (key !== "altinnRowId" && String(record[key] ?? "").length > 0) {
-            return objectHasContent(record);
-        }
-    }
-    return false;
+    return objectHasContent(obj as Record<string, unknown>);
 }
 
 /**

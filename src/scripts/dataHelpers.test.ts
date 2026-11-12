@@ -3,6 +3,14 @@ import { getDataForComponent, getValueFromDataKey, hasValue } from "./dataHelper
 
 describe("dataHelpers", () => {
     describe("hasValue", () => {
+        it("reads an object whose values cannot be turned into a string", () => {
+            // A symbol inside an array, and an object with no prototype, both throw when made a string.
+            expect(hasValue({ list: [Symbol("s")], name: "Kari" })).toBe(true);
+            expect(hasValue({ list: [Symbol("s")] })).toBe(false);
+            const bare: Record<string, unknown> = Object.create(null);
+            bare.name = "Kari";
+            expect(hasValue({ inner: bare })).toBe(true);
+        });
         it("returns false for undefined or null", () => {
             expect(hasValue(undefined)).toBe(false);
             expect(hasValue(null)).toBe(false);
