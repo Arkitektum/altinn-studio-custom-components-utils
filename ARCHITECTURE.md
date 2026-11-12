@@ -27,7 +27,7 @@ It is published to **npm** and **GitHub Packages** as `@arkitektum/altinn-studio
 
 The docs gallery depends on it directly as well as through the components, because its examples build attribute sets of their own.
 
-The statistics API (`altinn-studio-custom-components-api`) used to depend on this package and no longer does: nothing there ever imported it. The two shared packages that API does use, `@arkitektum/ftpb-testmotor-client` and `@arkitektum/ftpb-app-catalogue`, are unrelated to this one.
+The statistics API (`altinn-studio-custom-components-api`) does not depend on this package. The two shared packages it does use, `@arkitektum/ftpb-testmotor-client` and `@arkitektum/ftpb-app-catalogue`, are unrelated to this one.
 
 Most importantly, it owns **`createCustomElement`** and the **allow-list of valid custom-element tag names** (`customElementTagNames`).
 Because every consumer renders elements through `createCustomElement`, this package is the central guard against rendering arbitrary element names (see [SECURITY.md](./SECURITY.md)).
@@ -38,16 +38,16 @@ Because every consumer renders elements through `createCustomElement`, this pack
 
 The package exposes a single entry point (`src/index.ts`), and publishes types alongside the values:
 
-| Export                                                                                                                      | Kind      | Purpose                                                                       |
-| --------------------------------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
-| `CustomElementHtmlAttributes`                                                                                               | class     | Builds the attribute set for a custom element from component props.           |
-| `createCustomElement`                                                                                                       | function  | Creates a custom element — **throws for any tag name not in the allow-list**. |
-| `addContainerElement`, `appendChildren`, `addStyle`, `calculateFlexWidth`, `setAttributes`                                  | functions | DOM/element helpers.                                                          |
-| `getDataForComponent`, `hasValue`, `getValueFromDataKey`                                                                    | functions | Data-model helpers.                                                           |
-| `getTextResources`, `getDefaultTextResources`, `getTextResourceFromResourceBinding`, `getTextResourcesFromResourceBindings` | functions | Text-resource (i18n) helpers.                                                 |
-| `isValidHeaderSize`, `isValidTagName`                                                                                       | functions | Validators.                                                                   |
-| `customElementTagNames`                                                                                                     | constant  | The allow-list of valid custom-element tag names.                             |
-| `validSizeValues`                                                                                                           | constant  | Allowed size values.                                                          |
+| Export                                                                                                                      | Kind      | Purpose                                                                          |
+| --------------------------------------------------------------------------------------------------------------------------- | --------- | -------------------------------------------------------------------------------- |
+| `CustomElementHtmlAttributes`                                                                                               | class     | Builds the attribute set for a custom element from component props.              |
+| `createCustomElement`                                                                                                       | function  | Creates a custom element, and **throws for any tag name not in the allow-list**. |
+| `addContainerElement`, `appendChildren`, `addStyle`, `calculateFlexWidth`, `setAttributes`                                  | functions | DOM/element helpers.                                                             |
+| `getDataForComponent`, `hasValue`, `getValueFromDataKey`                                                                    | functions | Data-model helpers.                                                              |
+| `getTextResources`, `getDefaultTextResources`, `getTextResourceFromResourceBinding`, `getTextResourcesFromResourceBindings` | functions | Text-resource (i18n) helpers.                                                    |
+| `isValidHeaderSize`, `isValidTagName`                                                                                       | functions | Validators.                                                                      |
+| `customElementTagNames`                                                                                                     | constant  | The allow-list of valid custom-element tag names.                                |
+| `validSizeValues`                                                                                                           | constant  | Allowed size values.                                                             |
 
 ---
 
@@ -55,7 +55,7 @@ The package exposes a single entry point (`src/index.ts`), and publishes types a
 
 ```text
 src/
-├── index.ts                          # Public entry — re-exports everything below
+├── index.ts                          # Public entry, re-exports everything below
 ├── classes/
 │   └── CustomElementHtmlAttributes.ts # Attribute builder for custom elements
 ├── scripts/
@@ -71,7 +71,7 @@ dist/                                 # Build output (published): index.js (ESM)
                                       # and the declarations consumers type against
 ```
 
-The source is TypeScript as of 2.0.0, compiled by tsup. Relative imports name the `.ts` file they mean, so the sources import in plain Node with nothing built, Node stripping the types itself. The tests are Jest's (they use `jest.mock`), so they run through `yarn test`. Tests are colocated as `*.test.ts` next to each module.
+The source is TypeScript, compiled by tsup. Relative imports name the `.ts` file they mean, so the sources import in plain Node with nothing built, Node stripping the types itself. The tests are Jest's (they use `jest.mock`), so they run through `yarn test`. Tests are colocated as `*.test.ts` next to each module.
 
 ---
 
@@ -93,9 +93,9 @@ This is intentional: consumers only render through this function, so the allow-l
 
 **CI** (`.github/workflows/`):
 
-- `ci.yml` — install, `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test`, `yarn build` on push/PR to `main`.
-- `eslint.yml` — ESLint scan, uploads SARIF to the GitHub Security tab.
-- `build-and-publish-to-npm.yml` / `build-and-publish-to-github.yml` — on GitHub **release created**: install, test, build, then publish to **npm** (with `--provenance --access public`) and to **GitHub Packages**.
+- `ci.yml`: install, `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test`, `yarn build` on push/PR to `main`.
+- `eslint.yml`: ESLint scan, uploads SARIF to the GitHub Security tab.
+- `build-and-publish-to-npm.yml` / `build-and-publish-to-github.yml`: on GitHub **release created**: install, test, build, then publish to **npm** (with `--provenance --access public`) and to **GitHub Packages**.
 
 **Tooling:** Node.js 24, Yarn 4 via Corepack (pinned through `packageManager`), TypeScript, tsup, Babel (`@babel/preset-typescript`, so Jest can read the sources), Jest, ESLint (flat config), Prettier.
 

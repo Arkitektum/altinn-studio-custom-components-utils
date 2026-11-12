@@ -78,7 +78,7 @@ export function hasValue(obj: unknown): boolean {
     if (Array.isArray(obj)) {
         return obj.length > 0 ? arrayHasContent(obj) : false;
     }
-    // Anything that is not an object has been dealt with above, and cannot carry properties worth walking.
+    // Functions, bigints and symbols, which carry no value worth reading.
     if (typeof obj !== "object") {
         return false;
     }

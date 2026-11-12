@@ -49,20 +49,20 @@ const { createCustomElement } = require("@arkitektum/altinn-studio-custom-compon
 
 ## What's included
 
-| Export                                                                                                                      | Kind      | Purpose                                                                       |
-| --------------------------------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
-| `CustomElementHtmlAttributes`                                                                                               | class     | Builds the attribute set for a custom element from component props.           |
-| `createCustomElement`                                                                                                       | function  | Creates a custom element — **throws for any tag name not in the allow-list**. |
-| `addContainerElement`, `appendChildren`, `addStyle`, `calculateFlexWidth`, `setAttributes`                                  | functions | DOM/element helpers.                                                          |
-| `getDataForComponent`, `hasValue`, `getValueFromDataKey`                                                                    | functions | Data-model helpers.                                                           |
-| `getTextResources`, `getDefaultTextResources`, `getTextResourceFromResourceBinding`, `getTextResourcesFromResourceBindings` | functions | Text-resource (i18n) helpers.                                                 |
-| `isValidHeaderSize`, `isValidTagName`                                                                                       | functions | Validators.                                                                   |
-| `customElementTagNames`                                                                                                     | constant  | The allow-list of valid custom-element tag names.                             |
-| `validSizeValues`                                                                                                           | constant  | Allowed size values.                                                          |
+| Export                                                                                                                      | Kind      | Purpose                                                                          |
+| --------------------------------------------------------------------------------------------------------------------------- | --------- | -------------------------------------------------------------------------------- |
+| `CustomElementHtmlAttributes`                                                                                               | class     | Builds the attribute set for a custom element from component props.              |
+| `createCustomElement`                                                                                                       | function  | Creates a custom element, and **throws for any tag name not in the allow-list**. |
+| `addContainerElement`, `appendChildren`, `addStyle`, `calculateFlexWidth`, `setAttributes`                                  | functions | DOM/element helpers.                                                             |
+| `getDataForComponent`, `hasValue`, `getValueFromDataKey`                                                                    | functions | Data-model helpers.                                                              |
+| `getTextResources`, `getDefaultTextResources`, `getTextResourceFromResourceBinding`, `getTextResourcesFromResourceBindings` | functions | Text-resource (i18n) helpers.                                                    |
+| `isValidHeaderSize`, `isValidTagName`                                                                                       | functions | Validators.                                                                      |
+| `customElementTagNames`                                                                                                     | constant  | The allow-list of valid custom-element tag names.                                |
+| `validSizeValues`                                                                                                           | constant  | Allowed size values.                                                             |
 
 ---
 
-## 🧪 Development
+## Development
 
 ```bash
 git clone https://github.com/Arkitektum/altinn-studio-custom-components-utils.git
@@ -77,7 +77,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow and [ARCHITECTURE
 
 ---
 
-## 🔗 Resources
+## Resources
 
 - [Architecture overview](./ARCHITECTURE.md)
 - [Contributing guide](./CONTRIBUTING.md)

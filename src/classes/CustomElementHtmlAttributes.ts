@@ -35,10 +35,6 @@ export interface CustomElementProps {
     order?: unknown;
 }
 
-/**
- * Class representing CustomElementHtmlAttributes.
- * @class
- */
 export default class CustomElementHtmlAttributes {
     /**
      * The attributes, each set only when the props gave it a value.
@@ -216,7 +212,7 @@ export default class CustomElementHtmlAttributes {
      *
      * A bare boolean is deliberately not serialized, even though `hasValue` accepts one. Boolean form data always
      * arrives inside an object (`formData.simpleBinding`), and the components package uses the `hasValue(x) && x`
-     * idiom, which yields `false` for form data that is absent — serializing that would emit `formData="false"` and
+     * idiom, which yields `false` for form data that is absent, and serializing that would emit `formData="false"` and
      * make an empty component look populated.
      *
      * @param {Object} props - The properties object containing the `formData` attribute.
@@ -232,7 +228,7 @@ export default class CustomElementHtmlAttributes {
                 const formData = props?.formData.toString();
                 return JSON.stringify(formData);
             } else if (typeof props?.formData === "object") {
-                // Stringify directly so arrays keep their array structure (a manual key copy would turn [1,2] into {"0":1,"1":2}).
+                // Arrays included, which stay arrays.
                 return JSON.stringify(props.formData);
             }
         }

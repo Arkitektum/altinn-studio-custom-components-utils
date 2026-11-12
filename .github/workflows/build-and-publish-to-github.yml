@@ -36,7 +36,7 @@ jobs:
                     exit 1
                   fi
 
-            # 👇 Ensure Yarn v4 from packageManager is used
+            # Ensures the Yarn 4 named in packageManager is used.
             - name: Enable Corepack & activate Yarn 4
               run: |
                   corepack enable
@@ -57,7 +57,9 @@ jobs:
             - run: yarn test
             - run: yarn build
 
-            # If your package is public on npmjs.com use npmjs; for GitHub Packages keep npm.pkg.github.com
+            # The workflow's own token, rather than a secret that has to be created and rotated per repository. It can write
+            # packages because the workflow asks for `packages: write` above, and it is scoped to this repository, which is where
+            # the package belongs.
             - name: Publish to GitHub Packages
               if: ${{ success() }}
               run: npm publish

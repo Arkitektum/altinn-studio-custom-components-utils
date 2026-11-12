@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing to `@arkitektum/altinn-studio-custom-components-utils` — the shared library used by the custom components and the docs gallery.
+Thanks for contributing to `@arkitektum/altinn-studio-custom-components-utils`, the shared library used by the custom components and the docs gallery.
 
 For an overview of the public API and how the package is built, read [ARCHITECTURE.md](./ARCHITECTURE.md) first.
 
@@ -67,12 +67,12 @@ Before opening a pull request, make sure `yarn lint`, `yarn format:check`, `yarn
     - `src/constants/` for shared constants.
 
 2. **Export it** from `src/index.ts`, together with any type it introduces.
-   The single entry point is the package's public API — anything not re-exported there is internal.
+   The single entry point is the package's public API, and anything not re-exported there is internal.
 
 3. **Add tests** as a colocated `*.test.ts` next to the module, and cover the behavior with Jest (jsdom).
 
 4. **Mind backward compatibility.**
-   Many packages depend on this one.
+   Two packages depend on this one: the custom components and the docs gallery.
    Avoid breaking existing exports; if a breaking change is unavoidable, call it out in the PR and bump the major version.
 
 ### Adding a custom-element tag name

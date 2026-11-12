@@ -18,7 +18,7 @@ const mockedIsValidHeaderSize = jest.mocked(isValidHeaderSize);
 describe("CustomElementHtmlAttributes", () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        // Default hasValue to real implementation for most tests
+        // A simpler hasValue than the real one: anything but undefined, null and "" counts as a value.
         mockedHasValue.mockImplementation((val) => val !== undefined && val !== null && val !== "");
     });
 

@@ -7,8 +7,8 @@ Please make sure you can reproduce an issue on the latest release before reporti
 
 | Version        | Supported           |
 | -------------- | ------------------- |
-| Latest release | ✅                  |
-| Older releases | ❌ (please upgrade) |
+| Latest release | Yes                 |
+| Older releases | No (please upgrade) |
 
 ## Reporting a vulnerability
 
@@ -40,7 +40,7 @@ A few properties are relevant when assessing security:
 
 - **Tag-name allow-list.**
   `createCustomElement` rejects any tag name not present in the `customElementTagNames` allow-list (`src/constants/customElementTagNames.ts`). The list is frozen, so a consumer cannot add to it at runtime.
-  This is an intentional guard against arbitrary element injection across every consumer; changes to it — and to `isValidTagName` / `createCustomElement` — deserve extra scrutiny.
+  This is an intentional guard against arbitrary element injection across every consumer; changes to it, and to `isValidTagName` / `createCustomElement`, deserve extra scrutiny.
 - **Untrusted input.**
   The helpers operate on form data and text resources supplied by the host application.
   Treat such input as untrusted and validate/escape appropriately when rendering.
