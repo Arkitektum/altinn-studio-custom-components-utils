@@ -9,7 +9,6 @@ export default defineConfig([
     ...tseslint.configs.recommended,
     {
         files: ["**/*.{js,mjs,cjs,ts}"],
-        plugins: { js },
         languageOptions: { globals: { ...globals.browser, ...globals.node } },
         rules: {
             "sort-imports": [
@@ -22,18 +21,6 @@ export default defineConfig([
     },
     {
         // coverage/ holds jest's generated report, which carries its own eslint directives and is not ours to lint.
-        ignores: ["dist/**", "docs/**", "coverage/**", "node_modules/", "**/vendor/*.js"]
-    },
-    {
-        files: ["**/*.test.{js,ts}", "**/*.spec.{js,ts}"],
-        languageOptions: {
-            globals: {
-                ...globals.jest
-            }
-        },
-        rules: {
-            // jest defines describe, it and expect, so the rule has nothing to go on here.
-            "no-undef": "off"
-        }
+        ignores: ["dist/**", "coverage/**", "node_modules/"]
     }
 ]);
