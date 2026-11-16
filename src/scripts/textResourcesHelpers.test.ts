@@ -1,14 +1,21 @@
 import { afterEach, beforeEach, describe, expect, it } from "@jest/globals";
 import {
     getDefaultTextResources,
+    getFallbackDefaultTextResources,
+    getFallbackTextResources,
     getTextResourceFromResourceBinding,
     getTextResources,
     getTextResourcesFromResourceBindings,
     isPlainObject
 } from "./textResourcesHelpers.ts";
 
-/** The two globals the app sets before the components render, which these tests move about. */
-const testGlobals = globalThis as { textResources?: unknown; defaultTextResources?: unknown };
+/** The globals the app sets before the components render, which these tests move about. */
+const testGlobals = globalThis as {
+    textResources?: unknown;
+    defaultTextResources?: unknown;
+    fallbackTextResources?: unknown;
+    fallbackDefaultTextResources?: unknown;
+};
 
 describe("textResourcesHelpers", () => {
     let originalTextResources: unknown;
@@ -17,11 +24,15 @@ describe("textResourcesHelpers", () => {
     beforeEach(() => {
         originalTextResources = testGlobals.textResources;
         originalDefaultTextResources = testGlobals.defaultTextResources;
+        delete testGlobals.fallbackTextResources;
+        delete testGlobals.fallbackDefaultTextResources;
     });
 
     afterEach(() => {
         testGlobals.textResources = originalTextResources;
         testGlobals.defaultTextResources = originalDefaultTextResources;
+        delete testGlobals.fallbackTextResources;
+        delete testGlobals.fallbackDefaultTextResources;
     });
 
     describe("getTextResources", () => {
@@ -70,6 +81,74 @@ describe("textResourcesHelpers", () => {
             delete testGlobals.textResources;
             delete testGlobals.defaultTextResources;
             expect(getTextResourceFromResourceBinding("myKey")).toBe("myKey");
+        });
+    });
+
+    describe("getFallbackTextResources and getFallbackDefaultTextResources", () => {
+        it("return the fallback globals when present", () => {
+            testGlobals.fallbackTextResources = { resources: [{ id: "a", value: "A" }] };
+            testGlobals.fallbackDefaultTextResources = { resources: [{ id: "b", value: "B" }] };
+            expect(getFallbackTextResources()).toEqual({ resources: [{ id: "a", value: "A" }] });
+            expect(getFallbackDefaultTextResources()).toEqual({ resources: [{ id: "b", value: "B" }] });
+        });
+        it("return an empty array when not present", () => {
+            expect(getFallbackTextResources()).toEqual([]);
+            expect(getFallbackDefaultTextResources()).toEqual([]);
+        });
+    });
+
+    describe("getTextResourceFromResourceBinding with fallback texts", () => {
+        const set = (id: string, value: string) => ({ resources: [{ id, value }] });
+        beforeEach(() => {
+            testGlobals.textResources = { resources: [{ id: "app.en", value: "App en" }] };
+            testGlobals.defaultTextResources = {
+                resources: [
+                    { id: "pkg.en", value: "Package en" },
+                    { id: "shared", value: "Package en shared" }
+                ]
+            };
+            testGlobals.fallbackTextResources = {
+                resources: [
+                    { id: "app.nb", value: "App nb" },
+                    { id: "shared", value: "App nb shared" },
+                    { id: "both.nb", value: "App nb both" }
+                ]
+            };
+            testGlobals.fallbackDefaultTextResources = {
+                resources: [
+                    { id: "pkg.nb", value: "Package nb" },
+                    { id: "both.nb", value: "Package nb both" }
+                ]
+            };
+        });
+
+        it("looks in the reader's language first, the app's texts and then the package's", () => {
+            expect(getTextResourceFromResourceBinding("app.en")).toBe("App en");
+            expect(getTextResourceFromResourceBinding("pkg.en")).toBe("Package en");
+        });
+        it("shows the app's own text before the package's in the same language, as it overrides it", () => {
+            testGlobals.textResources = set("override", "App wording");
+            testGlobals.defaultTextResources = set("override", "Package wording");
+            expect(getTextResourceFromResourceBinding("override")).toBe("App wording");
+            testGlobals.fallbackTextResources = set("override.nb", "App nb wording");
+            testGlobals.fallbackDefaultTextResources = set("override.nb", "Package nb wording");
+            expect(getTextResourceFromResourceBinding("override.nb")).toBe("App nb wording");
+        });
+        it("shows a translated package text before an app's nb wording of it", () => {
+            expect(getTextResourceFromResourceBinding("shared")).toBe("Package en shared");
+        });
+        it("falls back to the app's nb text, then the package's, for a text missing in the reader's language", () => {
+            expect(getTextResourceFromResourceBinding("app.nb")).toBe("App nb");
+            expect(getTextResourceFromResourceBinding("both.nb")).toBe("App nb both");
+            expect(getTextResourceFromResourceBinding("pkg.nb")).toBe("Package nb");
+        });
+        it("still shows the id when no set has the text", () => {
+            expect(getTextResourceFromResourceBinding("missing")).toBe("missing");
+        });
+        it("keeps an empty text in the reader's language rather than falling back past it", () => {
+            testGlobals.textResources = set("empty", "");
+            testGlobals.fallbackTextResources = set("empty", "Not this");
+            expect(getTextResourceFromResourceBinding("empty")).toBe("");
         });
     });
 

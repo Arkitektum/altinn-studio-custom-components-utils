@@ -9,14 +9,22 @@ export interface TextResourceCollection {
     resources?: TextResource[];
 }
 
+/** The text resource globals: the app's and the package's in the reader's language, and both in nb for a text missing from those. */
+interface GlobalTextResources {
+    textResources?: unknown;
+    defaultTextResources?: unknown;
+    fallbackTextResources?: unknown;
+    fallbackDefaultTextResources?: unknown;
+}
+
 /**
  * The globals the app sets before the components render.
  *
  * Read through a cast rather than declared with `declare global`, which would put these names into the global scope
  * of everything that depends on this package and collide with any other declaration of them.
  */
-function globalTextResources(): { textResources?: unknown; defaultTextResources?: unknown } {
-    return globalThis as { textResources?: unknown; defaultTextResources?: unknown };
+function globalTextResources(): GlobalTextResources {
+    return globalThis as GlobalTextResources;
 }
 
 /**
@@ -38,10 +46,32 @@ export function getDefaultTextResources(): unknown {
 }
 
 /**
+ * The app's own text resources in the fallback language (nb), for a text missing from those in the reader's language.
+ *
+ * @returns Whatever the app put on `globalThis.fallbackTextResources`, or an empty array when it set nothing, as it does when the reader's language is nb.
+ */
+export function getFallbackTextResources(): unknown {
+    return typeof globalThis !== "undefined" && globalTextResources().fallbackTextResources ? globalTextResources().fallbackTextResources : [];
+}
+
+/**
+ * The package's text resources in the fallback language (nb), for a text missing from those in the reader's language.
+ *
+ * @returns Whatever the app put on `globalThis.fallbackDefaultTextResources`, or an empty array when it set nothing.
+ */
+export function getFallbackDefaultTextResources(): unknown {
+    return typeof globalThis !== "undefined" && globalTextResources().fallbackDefaultTextResources
+        ? globalTextResources().fallbackDefaultTextResources
+        : [];
+}
+
+/**
  * The text for one resource binding.
  *
- * The app's own resources are searched first, then the defaults that ship with the components. A binding nothing
- * answers to comes back as itself, which is what puts the missing id on screen instead of an empty space.
+ * The reader's language is searched first, the app's own resources and then the defaults that ship with the components,
+ * then the same two in the fallback language (nb), so a text not yet translated shows in nb rather than as its id, and a
+ * translated package text is shown before an app's nb wording of it. A binding nothing answers to comes back as itself,
+ * which is what puts the missing id on screen instead of an empty space.
  *
  * A component reads its bindings off props that may not carry the one it is after, so nothing is a valid argument
  * and comes straight back out. Callers are spared a guard they would otherwise need at every call site.
@@ -50,11 +80,13 @@ export function getDefaultTextResources(): unknown {
  * @returns The text, the binding itself when neither set has it, or nothing when none was given.
  */
 export function getTextResourceFromResourceBinding(resourceBinding?: string): string | undefined {
-    const textResources = getTextResources() as TextResourceCollection | undefined;
-    const defaultTextResources = getDefaultTextResources() as TextResourceCollection | undefined;
+    const find = (collection: unknown) =>
+        (collection as TextResourceCollection | undefined)?.resources?.find((resource) => resource.id === resourceBinding)?.value;
     return (
-        textResources?.resources?.find((resource) => resource.id === resourceBinding)?.value ??
-        defaultTextResources?.resources?.find((resource) => resource.id === resourceBinding)?.value ??
+        find(getTextResources()) ??
+        find(getDefaultTextResources()) ??
+        find(getFallbackTextResources()) ??
+        find(getFallbackDefaultTextResources()) ??
         resourceBinding
     );
 }

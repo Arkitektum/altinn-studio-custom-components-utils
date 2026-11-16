@@ -9,6 +9,8 @@ export type { AppendableChild, Grid } from "./scripts/elementHelpers.ts";
 export {
     getTextResources,
     getDefaultTextResources,
+    getFallbackTextResources,
+    getFallbackDefaultTextResources,
     getTextResourceFromResourceBinding,
     getTextResourcesFromResourceBindings
 } from "./scripts/textResourcesHelpers.ts";
