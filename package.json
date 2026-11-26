@@ -39,7 +39,7 @@
     },
     "homepage": "https://github.com/Arkitektum/altinn-studio-custom-components-utils#readme",
     "devDependencies": {
-        "@babel/core": "^8.1.2",
+        "@babel/core": "^8.1.3",
         "@babel/preset-env": "^8.0.7",
         "@babel/preset-typescript": "^8.0.7",
         "@eslint/js": "^10.0.1",
@@ -52,7 +52,7 @@
         "prettier": "^3.10.1",
         "tsup": "^9.0.0",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.72.2"
+        "typescript-eslint": "^8.74.0"
     },
     "engines": {
         "node": ">=24"
