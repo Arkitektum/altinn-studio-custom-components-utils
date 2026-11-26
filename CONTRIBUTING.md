@@ -1,110 +1,44 @@
 # Contributing
 
-Thanks for contributing to `@arkitektum/altinn-studio-custom-components-utils`, the shared library used by the custom components and the docs gallery.
+Set up as described under Development in the [README](./README.md): Node.js 24 and Yarn 4 via [Corepack](https://nodejs.org/api/corepack.html), which activates the Yarn version in `package.json#packageManager`. For how the package is structured and built, see [ARCHITECTURE.md](./ARCHITECTURE.md).
 
-For an overview of the public API and how the package is built, read [ARCHITECTURE.md](./ARCHITECTURE.md) first.
+## Commands
 
----
-
-## Prerequisites
-
-- **Node.js 24**
-- **Yarn 4**, managed via [Corepack](https://nodejs.org/api/corepack.html). Enable it once:
-
-    ```bash
-    corepack enable
-    ```
-
-    The correct Yarn version is then activated automatically from the `packageManager` field in `package.json`.
-
----
-
-## Getting started
-
-1. **Clone and install**
-
-    ```bash
-    git clone https://github.com/Arkitektum/altinn-studio-custom-components-utils.git
-    cd altinn-studio-custom-components-utils
-    yarn install
-    ```
-
-2. **Run the tests**
-
-    ```bash
-    yarn test
-    ```
-
-3. **Build**
-
-    ```bash
-    yarn build
-    ```
-
-    This emits the ESM (`dist/index.js`) and CJS (`dist/index.cjs`) bundles via tsup.
-
----
-
-## Everyday commands
-
-| Command             | What it does                                                 |
-| ------------------- | ------------------------------------------------------------ |
-| `yarn test`         | Run the Jest unit tests (with coverage).                     |
-| `yarn build`        | Build the publishable ESM + CJS bundles into `dist/`.        |
-| `yarn lint`         | Lint the source (ESLint flat config in `eslint.config.mjs`). |
-| `yarn format:check` | Check formatting with Prettier.                              |
-| `yarn typecheck`    | Type-check with `tsc --noEmit`.                              |
-
-Before opening a pull request, make sure `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test` and `yarn build` all pass. CI runs the same checks.
-
----
+| Command             | What it does                                            |
+| ------------------- | ------------------------------------------------------- |
+| `yarn test`         | Run the Jest unit tests (with coverage).                |
+| `yarn build`        | Build the publishable ESM and CJS bundles into `dist/`. |
+| `yarn lint`         | Lint with ESLint (flat config in `eslint.config.mjs`).  |
+| `yarn format`       | Format with Prettier.                                   |
+| `yarn format:check` | Check formatting with Prettier.                         |
+| `yarn typecheck`    | Type-check with `tsc --noEmit`.                         |
 
 ## Adding or changing functionality
 
-1. **Add the code** under the right folder:
-    - `src/classes/` for classes,
-    - `src/scripts/` for helper functions,
-    - `src/constants/` for shared constants.
+1. Add the code under the right folder: `src/classes/` for classes, `src/scripts/` for helper functions, `src/constants/` for shared constants.
 
-2. **Export it** from `src/index.ts`, together with any type it introduces.
-   The single entry point is the package's public API, and anything not re-exported there is internal.
+2. Export it from `src/index.ts`, together with any type it introduces. Anything not re-exported there is internal.
 
-3. **Add tests** as a colocated `*.test.ts` next to the module, and cover the behavior with Jest (jsdom).
+3. Add tests as a colocated `*.test.ts` next to the module.
 
-4. **Mind backward compatibility.**
-   Two packages depend on this one: the custom components and the docs gallery.
-   Avoid breaking existing exports; if a breaking change is unavoidable, call it out in the PR and bump the major version.
+4. Mind backward compatibility. The custom components and the docs gallery depend on this package. Avoid breaking existing exports, and if a breaking change is unavoidable, call it out in the PR and bump the major version.
 
 ### Adding a custom-element tag name
 
-The allow-list in `src/constants/customElementTagNames.ts` is **security-critical**: `createCustomElement` throws for any tag name not in it.
-When a new component is added anywhere in the ecosystem, add its tag name here, then release a new version of this package and bump it in the consumer.
-
----
-
-## Coding conventions
-
-- **ES modules** throughout, written in TypeScript; the public surface is `src/index.ts`. Relative imports name the `.ts` file they mean, which is what lets the sources run unbuilt.
-- **JSDoc** on classes and exported functions.
-- **Formatting & linting** via Prettier (`.prettierrc`) and ESLint (`eslint.config.mjs`).
-- **Tests** colocated as `*.test.ts` and run with Jest.
-
----
+When a new component is added anywhere in the ecosystem, add its tag name to `src/constants/customElementTagNames.ts`, then release a new version of this package and bump it in the consumers. `createCustomElement` throws for any tag name not in the list, so changes to it deserve extra review (see [SECURITY.md](./SECURITY.md)).
 
 ## Pull requests
 
 1. Branch off `main`.
-2. Keep changes focused; update or add tests.
-3. Ensure `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test` and `yarn build` pass locally.
+2. Keep changes focused, and update or add tests.
+3. Make sure `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test` and `yarn build` pass locally.
 4. Open a PR against `main`. CI (`ci.yml` and the ESLint scan) must be green before merge.
 
----
+## Versioning and releases
 
-## Versioning & releases
+1. Bump the version in `package.json` as part of the change that warrants a release, following semantic versioning.
+2. Create a GitHub Release tagged `v` plus that version (for example `v2.1.0`). The publish workflows stop if the tag does not match `package.json`.
+3. A reviewer approves the `release` environment, and the workflows test, build and publish to npm (with provenance) and to GitHub Packages.
+4. Bump the dependency in `altinn-studio-custom-components` and `altinn-studio-custom-components-docs`. The docs site pins both this package and the components, so a change that reaches the gallery usually needs both bumped.
 
-- Releases are **triggered by creating a GitHub Release**.
-  The publish workflows then install, test, build, and publish to **npm** (with provenance) and to **GitHub Packages**.
-- Bump the version in `package.json` as part of the change that warrants a release, following semantic versioning.
-- After a release, bump the dependency in the two consuming repositories, `altinn-studio-custom-components` and `altinn-studio-custom-components-docs`, to pick up the change. The docs site pins both this package and the components, so a change that reaches the gallery usually needs both bumped.
-
-> Only maintainers can publish releases.
+Only maintainers can publish releases.

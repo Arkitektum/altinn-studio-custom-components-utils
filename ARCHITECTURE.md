@@ -1,22 +1,8 @@
 # Architecture
 
-This document explains what `@arkitektum/altinn-studio-custom-components-utils` provides, how it is built, and how it fits into the wider custom-components ecosystem.
-It is aimed at developers who maintain or extend the package.
+How `@arkitektum/altinn-studio-custom-components-utils` is structured and built, for developers who maintain or extend the package. For what it provides, see the [README](./README.md). For how to contribute, see [CONTRIBUTING](./CONTRIBUTING.md).
 
-For how to contribute, see [CONTRIBUTING](./CONTRIBUTING.md).
-
----
-
-## 1. What this package is
-
-A small **shared library** of functions, classes, and constants used across the custom-components packages.
-It is the common foundation that the components and the docs gallery build on.
-
-It is published to **npm** and **GitHub Packages** as `@arkitektum/altinn-studio-custom-components-utils`, in both **ESM and CommonJS** builds.
-
----
-
-## 2. Who depends on it
+## Who depends on it
 
 ```text
    @arkitektum/altinn-studio-custom-components-utils  (THIS PACKAGE)
@@ -25,22 +11,13 @@ It is published to **npm** and **GitHub Packages** as `@arkitektum/altinn-studio
    custom-components       docs gallery
 ```
 
-The docs gallery depends on it directly as well as through the components, because its examples build attribute sets of their own.
+The docs gallery depends on it directly as well as through the components, because its examples build attribute sets of their own. Both render elements through `createCustomElement`, so the tag-name allow-list here decides which custom elements they can render.
 
-The statistics API (`altinn-studio-custom-components-api`) does not depend on this package. The two shared packages it does use, `@arkitektum/ftpb-testmotor-client` and `@arkitektum/ftpb-app-catalogue`, are unrelated to this one.
+## Public API
 
-Most importantly, it owns **`createCustomElement`** and the **allow-list of valid custom-element tag names** (`customElementTagNames`).
-Because every consumer renders elements through `createCustomElement`, this package is the central guard against rendering arbitrary element names (see [SECURITY.md](./SECURITY.md)).
+The package has a single entry point, `src/index.ts`, which re-exports every public value and type. The exports are listed in the README under [What's included](./README.md#whats-included).
 
----
-
-## 3. Public API
-
-The package exposes a single entry point (`src/index.ts`), and publishes types alongside the values. The exports, and what each is for, are listed in the README under [What's included](./README.md#whats-included).
-
----
-
-## 4. Source layout
+## Source layout
 
 ```text
 src/
@@ -60,39 +37,29 @@ dist/                                 # Build output (published): index.js (ESM)
                                       # and the declarations consumers type against
 ```
 
-The source is TypeScript, compiled by tsup. Relative imports name the `.ts` file they mean, so the sources import in plain Node with nothing built, Node stripping the types itself. The tests are Jest's (they use `jest.mock`), so they run through `yarn test`. Tests are colocated as `*.test.ts` next to each module.
+The source is TypeScript, compiled by tsup. Relative imports name the `.ts` file they mean, so the sources import in plain Node with nothing built. Tests are colocated as `*.test.ts` next to each module and run through `yarn test`, as they use `jest.mock`.
 
----
+## The tag-name allow-list
 
-## 5. The tag-name allow-list
+`createCustomElement(tagName, attributes)` calls `isValidTagName(tagName)` and throws `Invalid tag name` unless the name is in `customElementTagNames`. The list is frozen with `Object.freeze`, so it cannot be extended at runtime. Adding a new component anywhere in the ecosystem requires adding its tag name here, releasing a new version of this package, and bumping it in the consumers.
 
-`createCustomElement(tagName, attributes)` calls `isValidTagName(tagName)` and **throws `Invalid tag name`** unless the name is present in `customElementTagNames`.
-This is intentional: consumers only render through this function, so the allow-list is the single place that decides which custom elements may exist at runtime.
+## Build and release
 
-**Adding a new component anywhere in the ecosystem requires adding its tag name here**, then releasing a new version of this package and bumping it in the consumer.
-
----
-
-## 6. Build & release pipeline
-
-- **Build** with **tsup** (`yarn build`): a single entry (`src/index.ts`) emitted as both ESM (`dist/index.js`) and CJS (`dist/index.cjs`), with declarations, source maps and tree-shaking. Deliberately **not** minified: a library that minifies itself only makes the stack traces and bundle analysis in the consuming application harder to read.
-  `package.json#exports` maps `import` → ESM and `require` → CJS.
-- **Tests** with **Jest** (jsdom environment), with coverage.
+- `yarn build` runs tsup on `src/index.ts` and emits ESM (`dist/index.js`) and CJS (`dist/index.cjs`), with declarations (`index.d.ts`, `index.d.cts`), source maps and tree-shaking, unminified. `package.json#exports` maps `import` to ESM and `require` to CJS.
+- `yarn test` runs Jest in jsdom, with coverage written to `coverage/`.
 - Only `dist/` is published (`package.json#files`).
 
-**CI** (`.github/workflows/`):
+CI (`.github/workflows/`):
 
-- `ci.yml`: install, `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test`, `yarn build` on push/PR to `main`.
+- `ci.yml`: install, `yarn lint`, `yarn format:check`, `yarn typecheck`, `yarn test`, `yarn build` on push and PR to `main`.
 - `eslint.yml`: ESLint scan, uploads SARIF to the GitHub Security tab.
-- `build-and-publish-to-npm.yml` / `build-and-publish-to-github.yml`: on GitHub **release created**: install, test, build, then publish to **npm** (with `--provenance --access public`) and to **GitHub Packages**.
+- `build-and-publish-to-npm.yml` and `build-and-publish-to-github.yml`: on GitHub release created, wait for approval in the `release` environment, check that the release tag is `v` plus the `package.json` version, then install, test, build and publish to npm (trusted publishing, `--provenance --access public`) and to GitHub Packages.
 
-**Tooling:** Node.js 24, Yarn 4 via Corepack (pinned through `packageManager`), TypeScript, tsup, Babel (`@babel/preset-typescript`, so Jest can read the sources), Jest, ESLint (flat config), Prettier.
+Tooling: Node.js 24, Yarn 4 via Corepack (pinned through `packageManager`), TypeScript, tsup, Babel (`@babel/preset-typescript`, so Jest can read the sources), Jest, ESLint (flat config), Prettier.
 
----
+## Conventions
 
-## 7. Conventions
-
-- **Single public entry.** Everything consumers use is re-exported from `src/index.ts`; keep the surface deliberate. Types are part of that surface, so an exported value whose type is not also exported is an oversight.
-- **JSDoc** on classes and exported functions.
-- **Tests** colocated as `*.test.ts` and run with Jest. They import `describe`/`it`/`expect` from `@jest/globals`, which types them without `@types/jest`.
-- **Formatting/linting** via Prettier (`.prettierrc`) and ESLint (`eslint.config.mjs`).
+- Everything consumers use is re-exported from `src/index.ts`, including the types of exported values.
+- JSDoc on classes and exported functions.
+- Tests import `describe`, `it` and `expect` from `@jest/globals`.
+- Formatting and linting via Prettier (`.prettierrc`) and ESLint (`eslint.config.mjs`).
